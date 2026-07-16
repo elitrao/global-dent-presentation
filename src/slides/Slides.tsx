@@ -13,6 +13,7 @@ import {
   Database,
   FilmStrip,
   FlowArrow,
+  FunnelSimple,
   Lightning,
   MagnifyingGlass,
   Package,
@@ -348,9 +349,21 @@ function CandidatesSlide({ openPanel }: SlideProps) {
         </div>
 
         <div className="candidate-outcomes">
-          <p><strong>Ранний отсев</strong><span>До зарплаты и полугода обучения</span></p>
-          <p><strong>Собственная модель</strong><span>На данных и KPI Global Dent</span></p>
-          <p><strong>Честная проверка</strong><span>Сначала оцениваем достаточность истории</span></p>
+          <Benefit
+            icon={<FunnelSimple size={21} weight="duotone" />}
+            title="Ранний отсев"
+            text="До зарплаты и полугода обучения"
+          />
+          <Benefit
+            icon={<Brain size={21} weight="duotone" />}
+            title="Собственная модель"
+            text="На данных и KPI Global Dent"
+          />
+          <Benefit
+            icon={<ShieldCheck size={21} weight="duotone" />}
+            title="Честная проверка"
+            text="Сначала оцениваем достаточность истории"
+          />
         </div>
 
         <button type="button" className="text-button" onClick={() => openPanel("candidates")}>
