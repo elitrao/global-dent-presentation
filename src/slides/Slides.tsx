@@ -143,11 +143,18 @@ function ContextSlide() {
 function InfrastructureSlide() {
   return (
     <div className="slide-layout infrastructure-layout">
-      <div className="section-heading infra-heading">
-        <h2 data-slide-title tabIndex={-1}>
-          Общая база превращает четыре задачи в систему
-        </h2>
-        <p>Подключаем источники один раз и развиваем независимые продукты поверх единого контура данных.</p>
+      <div className="infra-copy">
+        <div className="section-heading infra-heading">
+          <h2 data-slide-title tabIndex={-1}>
+            Общая база превращает четыре задачи в систему
+          </h2>
+          <p>Подключаем источники один раз и развиваем независимые продукты поверх единого контура данных.</p>
+        </div>
+
+        <div className="reuse-statement">
+          <Lightning size={24} weight="fill" aria-hidden="true" />
+          <p>Каждый новый продукт использует уже подключенные данные и накопленную экспертизу.</p>
+        </div>
       </div>
 
       <div className="system-map" aria-label="Четыре продукта на общей инфраструктуре">
@@ -184,11 +191,6 @@ function InfrastructureSlide() {
             <p>Анализ и производство</p>
           </div>
         </article>
-      </div>
-
-      <div className="reuse-statement">
-        <Lightning size={24} weight="fill" aria-hidden="true" />
-        <p>Каждый новый продукт использует уже подключенные данные и накопленную экспертизу.</p>
       </div>
     </div>
   );
