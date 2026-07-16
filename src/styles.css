@@ -318,16 +318,18 @@ h3 {
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
   align-items: center;
-  gap: clamp(30px, 4vw, 76px);
+  gap: clamp(44px, 5.5vw, 105px);
 }
 
 .hero-copy {
   position: relative;
   z-index: 2;
+  min-width: 0;
 }
 
 .hero-copy h1 {
   max-width: 11.5ch;
+  font-size: clamp(48px, 4.2vw, 68px);
 }
 
 .hero-lead {
@@ -2049,6 +2051,10 @@ h3 {
   h1 {
     font-size: clamp(42px, 12vw, 56px);
     line-height: 1;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(40px, 11vw, 50px);
   }
 
   h2 {
