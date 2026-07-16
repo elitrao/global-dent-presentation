@@ -152,12 +152,16 @@ export function App() {
           pointerStart.current = null;
         }}
       >
-        <header className={headerScrolled ? "presentation-header is-scrolled" : "presentation-header"}>
-          <div className="wordmark" aria-label="Global Dent и Synapt">
-            <span className="wordmark-mark" aria-hidden="true" />
-            <span>GLOBAL DENT</span>
-            <span className="wordmark-collab"><b>×</b> SYNAPT</span>
-          </div>
+        <header className={`${headerScrolled ? "presentation-header is-scrolled" : "presentation-header"}${activeIndex === 0 ? " is-cover" : ""}`}>
+          {activeIndex === 0 ? (
+            <img className="cover-brand-logo" src="/assets/global-dent-club-logo.png" alt="Global Dent Club" />
+          ) : (
+            <div className="wordmark" aria-label="Global Dent и Synapt">
+              <span className="wordmark-mark" aria-hidden="true" />
+              <span>GLOBAL DENT</span>
+              <span className="wordmark-collab"><b>×</b> SYNAPT</span>
+            </div>
+          )}
           <p className="header-title">{activeSlide.title}</p>
         </header>
 

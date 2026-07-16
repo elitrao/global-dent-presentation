@@ -1,590 +1,344 @@
 import type { ReactNode } from "react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  BookOpenText,
-  Brain,
-  CalendarBlank,
-  ChartLineUp,
-  ChatCircleDots,
-  CheckCircle,
-  CurrencyRub,
-  Database,
-  FlowArrow,
-  FunnelSimple,
-  Lightning,
-  MagnifyingGlass,
-  Package,
-  PhoneCall,
-  ShieldCheck,
-  SlidersHorizontal,
-  Stack,
-  Target,
-  UserFocus,
-  VideoCamera,
-} from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
 import type { SlideDefinition, SlideProps } from "../types";
 
-const asset = (name: string) => `/assets/${name}`;
+function Eyebrow({ children }: { children: ReactNode }) {
+  return <p className="eyebrow">{children}</p>;
+}
 
-function Benefit({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
+function BenefitList({ items }: { items: Array<{ title: string; text?: string }> }) {
   return (
-    <div className="benefit-item">
-      <span className="benefit-icon" aria-hidden="true">
-        {icon}
-      </span>
-      <div>
-        <h3>{title}</h3>
-        <p>{text}</p>
+    <div className="benefit-block">
+      <p className="benefit-heading">Плюсы от внедрения</p>
+      <div className="benefit-list">
+        {items.map((item) => (
+          <article className="benefit-row" key={item.title}>
+            <strong>{item.title}</strong>
+            {item.text ? <span>{item.text}</span> : null}
+          </article>
+        ))}
       </div>
     </div>
   );
 }
 
-function BenefitSectionLabel() {
+function NumberedRows({
+  items,
+  className = "",
+}: {
+  items: Array<{ title: string; text: string }>;
+  className?: string;
+}) {
   return (
-    <p className="benefit-section-label">
-      <CheckCircle size={17} weight="fill" aria-hidden="true" />
-      Плюсы от внедрения
-    </p>
-  );
-}
-
-function FlowSteps({ steps }: { steps: string[] }) {
-  return (
-    <div className="flow-steps" aria-label="Последовательность процесса">
-      {steps.map((step, index) => (
-        <div className="flow-step-wrap" key={step}>
-          <span className="flow-step">{step}</span>
-          {index < steps.length - 1 ? (
-            <ArrowRight className="flow-arrow" size={18} weight="bold" aria-hidden="true" />
-          ) : null}
-        </div>
+    <div className={`numbered-rows ${className}`.trim()}>
+      {items.map((item, index) => (
+        <article className="numbered-row" key={item.title}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <strong>{item.title}</strong>
+            <p>{item.text}</p>
+          </div>
+        </article>
       ))}
     </div>
   );
 }
 
-function HeroSlide() {
-  const reduceMotion = useReducedMotion();
-
+function DetailButton({ children, onClick }: { children: ReactNode; onClick: () => void }) {
   return (
-    <div className="slide-layout hero-layout">
-      <div className="hero-copy">
-        <p className="eyebrow">ИИ-дорожная карта</p>
+    <button type="button" className="detail-link" onClick={onClick}>
+      {children}
+      <span aria-hidden="true">↗</span>
+    </button>
+  );
+}
+
+function HeroSlide() {
+  return (
+    <div className="slide-layout title-slide">
+      <div className="title-slide-main">
+        <Eyebrow>ИИ-дорожная карта</Eyebrow>
         <h1 data-slide-title tabIndex={-1}>
           Четыре продукта.
-          <span> Одна инфраструктура.</span>
+          <br />
+          Одна инфраструктура.
         </h1>
-        <p className="hero-lead">
+        <p className="title-deck-copy">
           Данные подключаются один раз. Каждый следующий проект запускается быстрее и экономичнее.
         </p>
       </div>
-
-      <motion.figure
-        className="hero-art visual-frame visual-frame-hero"
-        initial={reduceMotion ? false : { opacity: 0, scale: 0.96, x: 48 }}
-        animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ duration: reduceMotion ? 0.01 : 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <img
-          src={asset("hero-infrastructure-1200.webp")}
-          srcSet={`${asset("hero-infrastructure-768.webp")} 768w, ${asset("hero-infrastructure-1200.webp")} 1200w`}
-          sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1100px) calc(100vw - 48px), 58vw"
-          alt="Абстрактная янтарная инфраструктура, объединяющая несколько продуктов"
-          width={1536}
-          height={1024}
-          loading="eager"
-          fetchPriority="high"
-        />
-      </motion.figure>
+      <div className="title-slide-footer">
+        <span>Global Dent</span>
+        <span>ИИ-продукты на общей базе данных</span>
+      </div>
     </div>
   );
 }
 
 function ContextSlide() {
-  return (
-    <div className="slide-layout context-layout">
-      <div className="context-heading">
-        <h2 data-slide-title tabIndex={-1}>
-          Масштаб уже требует другой скорости решений
-        </h2>
-        <p>
-          Продажи растут на данных, но анализ, планирование и проверка информации по-прежнему занимают ручное время.
-        </p>
-      </div>
+  const metrics = [
+    { value: "≈ 300 000", label: "имплантатов в год" },
+    { value: "≈ 5 000", label: "действующих клиентов" },
+    { value: "Ручная", label: "значительная часть анализа" },
+    { value: "6 месяцев", label: "до оценки нового продавца" },
+  ];
 
-      <div className="metric-composition" aria-label="Ключевые показатели масштаба и ручных процессов">
-        <article className="metric metric-volume">
-          <span className="metric-label">Годовой объем</span>
-          <span className="metric-number">≈ 300 000</span>
-          <p>имплантатов</p>
+  return (
+    <div className="slide-layout context-slide">
+      <Eyebrow>Почему сейчас</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>Масштаб уже требует другой скорости решений</h2>
+      <div className="context-columns">
+        <article>
+          <span>Операционный контур</span>
+          <p>Продажи растут на данных, но анализ, планирование и проверка информации по-прежнему требуют участия команды.</p>
         </article>
-        <article className="metric metric-clients">
-          <span className="metric-label">Клиентская база</span>
-          <span className="metric-number">≈ 5 000</span>
-          <p>действующих клиентов</p>
+        <article>
+          <span>Оценка нового продавца</span>
+          <p>Эффективность становится понятна только через полгода, когда ресурсы уже вложены.</p>
         </article>
-        <article className="metric metric-manual">
-          <span className="metric-label">Операционный контур</span>
-          <strong className="metric-emphasis">Ручная работа</strong>
-          <p>Анализ, планирование и проверка информации требуют участия команды.</p>
-        </article>
-        <article className="metric metric-hiring">
-          <span className="metric-label">Оценка нового продавца</span>
-          <div className="hiring-number">
-            <strong>6</strong>
-            <span>месяцев</span>
-          </div>
-          <p>до понимания, эффективен ли новый продавец</p>
-        </article>
+      </div>
+      <div className="metric-strip" aria-label="Ключевые показатели">
+        {metrics.map((metric) => (
+          <article className="metric-item" key={metric.label}>
+            <strong>{metric.value}</strong>
+            <span>{metric.label}</span>
+          </article>
+        ))}
       </div>
     </div>
   );
 }
 
 function InfrastructureSlide() {
+  const cards = [
+    { title: "Единый контур данных", text: "1С, склады, продажи и HR" },
+    { title: "Оборачиваемость", text: "Спрос, запасы и закупки" },
+    { title: "ИИ-бот", text: "Сценарии и корпоративные знания" },
+    { title: "Кандидаты", text: "Профиль и прогноз эффективности" },
+    { title: "Контент", text: "Форматы, хуки и сценарии" },
+  ];
+
   return (
-    <div className="slide-layout infrastructure-layout">
-      <div className="infra-copy">
-        <div className="section-heading infra-heading">
-          <h2 data-slide-title tabIndex={-1}>
-            Общая база превращает четыре задачи в систему
-          </h2>
-          <p>Подключаем источники один раз и развиваем независимые продукты поверх единого контура данных.</p>
-        </div>
-
-        <div className="reuse-statement">
-          <Lightning size={24} weight="fill" aria-hidden="true" />
-          <p>Каждый новый продукт использует уже подключенные данные и накопленную экспертизу.</p>
-        </div>
-      </div>
-
-      <div className="system-map" aria-label="Четыре продукта на общей инфраструктуре">
-        <article className="system-node node-turnover">
-          <ChartLineUp size={28} weight="duotone" aria-hidden="true" />
-          <div>
-            <h3>Оборачиваемость</h3>
-            <p>Спрос, запасы, закупки</p>
-          </div>
-        </article>
-        <article className="system-node node-bot">
-          <ChatCircleDots size={28} weight="duotone" aria-hidden="true" />
-          <div>
-            <h3>ИИ-бот</h3>
-            <p>Сценарии и знания</p>
-          </div>
-        </article>
-        <div className="system-core">
-          <Database size={40} weight="duotone" aria-hidden="true" />
-          <strong>Единый контур данных</strong>
-          <span>1С, склады, продажи, HR</span>
-        </div>
-        <article className="system-node node-people">
-          <UserFocus size={28} weight="duotone" aria-hidden="true" />
-          <div>
-            <h3>Кандидаты</h3>
-            <p>Профиль и прогноз</p>
-          </div>
-        </article>
-        <article className="system-node node-content">
-          <VideoCamera size={28} weight="duotone" aria-hidden="true" />
-          <div>
-            <h3>Контент</h3>
-            <p>Форматы, хуки, сценарии</p>
-          </div>
+    <div className="slide-layout infrastructure-slide">
+      <Eyebrow>Общая инфраструктура</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>Одна база, четыре независимых продукта</h2>
+      <div className="architecture-diagram" aria-label="Четыре продукта вокруг единого контура данных">
+        <span className="diagram-connector connector-one" aria-hidden="true" />
+        <span className="diagram-connector connector-two" aria-hidden="true" />
+        <span className="diagram-connector connector-three" aria-hidden="true" />
+        <span className="diagram-connector connector-four" aria-hidden="true" />
+        {cards.slice(1).map((card, index) => (
+          <article className={`architecture-card architecture-product product-${index + 1}`} key={card.title}>
+            <strong>{card.title}</strong>
+            <p>{card.text}</p>
+          </article>
+        ))}
+        <article className="architecture-card architecture-core">
+          <span>Общая база</span>
+          <strong>{cards[0].title}</strong>
+          <p>{cards[0].text}</p>
         </article>
       </div>
+      <p className="reuse-note">Каждый новый продукт использует уже подключённые данные и накопленную экспертизу.</p>
     </div>
   );
 }
 
 function InventorySlide({ openPanel }: SlideProps) {
   return (
-    <div className="slide-layout project-layout project-inventory">
-      <figure className="visual-frame project-art inventory-art">
-        <img
-          src={asset("inventory-forecast.webp")}
-          alt="Абстрактная система запасов с янтарной линией прогноза"
-          width={1536}
-          height={1024}
-          loading="lazy"
-        />
-      </figure>
-
-      <div className="project-copy inventory-copy">
-        <p className="eyebrow">Приоритет №1</p>
-        <h2 data-slide-title tabIndex={-1}>
-          Панель оборачиваемости
-        </h2>
-        <FlowSteps steps={["1С и склады", "Аналитика", "Прогноз", "Рекомендации", "Вопросы"]} />
-
-        <BenefitSectionLabel />
-        <div className="benefit-grid compact-benefits">
-          <Benefit
-            icon={<Package size={22} weight="duotone" />}
-            title="Меньше зависших запасов"
-            text="Видно, что перестало двигаться и где заморожены деньги."
-          />
-          <Benefit
-            icon={<ShieldCheck size={22} weight="duotone" />}
-            title="Меньше дефицита"
-            text="Закупка учитывает спрос, остаток, поставку и аналоги."
-          />
-          <Benefit
-            icon={<ChartLineUp size={22} weight="duotone" />}
-            title="Решения по данным"
-            text="Единая логика вместо разрозненных Excel-расчетов."
-          />
-          <Benefit
-            icon={<ChatCircleDots size={22} weight="duotone" />}
-            title="Ответ обычным языком"
-            text="Что закупить в августе и какие позиции зависли."
-          />
-        </div>
-
-        <button type="button" className="text-button" onClick={() => openPanel("inventory")}>
-          <SlidersHorizontal size={20} weight="bold" aria-hidden="true" />
-          Что потребуется
-          <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
-        </button>
-      </div>
+    <div className="slide-layout project-slide inventory-slide">
+      <Eyebrow>Приоритет №1</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>Панель оборачиваемости</h2>
+      <NumberedRows
+        className="five-steps"
+        items={[
+          { title: "1С и склады", text: "Остатки, движение и правила закупок" },
+          { title: "Аналитика", text: "Единая логика вместо ручных таблиц" },
+          { title: "Прогноз", text: "Спрос и будущая потребность" },
+          { title: "Рекомендации", text: "Что и когда закупать" },
+          { title: "Вопросы", text: "Ответ обычным языком" },
+        ]}
+      />
+      <BenefitList
+        items={[
+          { title: "Меньше зависших запасов", text: "Видно, где заморожены деньги" },
+          { title: "Меньше дефицита", text: "Закупка учитывает спрос и поставку" },
+          { title: "Решения по данным", text: "Одна логика вместо Excel" },
+          { title: "Быстрые ответы", text: "Без ручных расчётов" },
+        ]}
+      />
+      <DetailButton onClick={() => openPanel("inventory")}>Что потребуется</DetailButton>
     </div>
   );
 }
 
 function BotSlide() {
-  const reduceMotion = useReducedMotion();
+  const blocks = [
+    { title: "Новые сценарии", text: "Расширяем задачи, которые бот решает для команды" },
+    { title: "Успешные скрипты", text: "Сохраняем и переиспользуем работающие ответы" },
+    { title: "База знаний", text: "Корпоративная экспертиза остаётся внутри системы" },
+    { title: "Контроль качества", text: "Проверяем ответы и улучшаем стандарты консультаций" },
+  ];
 
   return (
-    <div className="slide-layout bot-layout">
-      <div className="bot-copy">
-        <h2 data-slide-title tabIndex={-1}>
-          ИИ-бот становится рабочей базой знаний
-        </h2>
-        <p>
-          Первые сценарии дали положительный результат. Следующий уровень: больше знаний, устойчивее ответы, шире применение.
-        </p>
-
-        <BenefitSectionLabel />
-        <div className="bot-capabilities">
-          <Benefit
-            icon={<Lightning size={22} weight="duotone" />}
-            title="Быстрее ответы"
-            text="Готовые сценарии сокращают путь от вопроса к действию."
-          />
-          <Benefit
-            icon={<ShieldCheck size={22} weight="duotone" />}
-            title="Единый стандарт"
-            text="Ответы опираются на проверенную базу знаний."
-          />
-          <Benefit
-            icon={<FlowArrow size={22} weight="duotone" />}
-            title="Больше сценариев"
-            text="Новые задачи без пропорционального роста ручной работы."
-          />
-          <Benefit
-            icon={<BookOpenText size={22} weight="duotone" />}
-            title="Знания остаются"
-            text="Успешные скрипты накапливаются и улучшаются."
-          />
-        </div>
-
-        <div className="support-line">
-          <CheckCircle size={20} weight="fill" aria-hidden="true" />
-          <span>Развитие идет в рамках сопровождения. Крупные блоки согласуются отдельно.</span>
-        </div>
+    <div className="slide-layout bot-slide">
+      <Eyebrow>Проект 2</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>ИИ-бот становится рабочей базой знаний</h2>
+      <div className="editorial-grid two-by-two">
+        {blocks.map((block, index) => (
+          <article className="editorial-card" key={block.title}>
+            <span className="editorial-card-index" aria-hidden="true">
+              {index + 1}
+            </span>
+            <h3>{block.title}</h3>
+            <p>{block.text}</p>
+          </article>
+        ))}
       </div>
-
-      <div className="bot-orbit" aria-hidden="true">
-        <div className="orbit-ring ring-one" />
-        <div className="orbit-ring ring-two" />
-        <motion.div
-          className="bot-core"
-          animate={reduceMotion ? { y: 0 } : { y: [-5, 5, -5] }}
-          transition={
-            reduceMotion
-              ? { duration: 0.01 }
-              : { duration: 5, repeat: Infinity, ease: "easeInOut" }
-          }
-        >
-          <Brain size={68} weight="duotone" />
-        </motion.div>
-        <div className="bot-satellite sat-one">
-          <ChatCircleDots size={26} weight="duotone" />
-        </div>
-        <div className="bot-satellite sat-two">
-          <BookOpenText size={26} weight="duotone" />
-        </div>
-        <div className="bot-satellite sat-three">
-          <ShieldCheck size={26} weight="duotone" />
-        </div>
-      </div>
+      <BenefitList
+        items={[
+          { title: "Быстрее ответы" },
+          { title: "Единый стандарт консультаций" },
+          { title: "Масштабирование без роста ручной работы" },
+          { title: "Накопление корпоративных знаний" },
+        ]}
+      />
+      <p className="project-note">Развитие идёт в рамках сопровождения. Крупные функциональные блоки согласуются отдельно.</p>
     </div>
   );
 }
 
 function CandidatesSlide({ openPanel }: SlideProps) {
   return (
-    <div className="slide-layout candidates-layout">
-      <div className="candidates-copy">
-        <h2 data-slide-title tabIndex={-1}>
-          Прогноз до выхода кандидата в штат
-        </h2>
-        <p>
-          Не универсальный тест, а профиль успешного продавца Global Dent на основе фактических результатов.
-        </p>
-
-        <div className="candidate-flow">
-          <div>
-            <FilesIcon />
-            <span>Резюме и тесты</span>
-          </div>
-          <ArrowRight size={20} weight="bold" aria-hidden="true" />
-          <div>
-            <ChartLineUp size={24} weight="duotone" aria-hidden="true" />
-            <span>Продажи</span>
-          </div>
-          <ArrowRight size={20} weight="bold" aria-hidden="true" />
-          <div className="candidate-flow-result">
-            <Target size={24} weight="duotone" aria-hidden="true" />
-            <span>Прогноз</span>
-          </div>
-        </div>
-
-        <BenefitSectionLabel />
-        <div className="candidate-outcomes">
-          <Benefit
-            icon={<FunnelSimple size={21} weight="duotone" />}
-            title="Ранний отсев"
-            text="До зарплаты и полугода обучения"
-          />
-          <Benefit
-            icon={<Brain size={21} weight="duotone" />}
-            title="Собственная модель"
-            text="На данных и KPI Global Dent"
-          />
-          <Benefit
-            icon={<ShieldCheck size={21} weight="duotone" />}
-            title="Честная проверка"
-            text="Сначала оцениваем достаточность истории"
-          />
-        </div>
-
-        <button type="button" className="text-button" onClick={() => openPanel("candidates")}>
-          <SlidersHorizontal size={20} weight="bold" aria-hidden="true" />
-          Какие данные нужны
-          <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
-        </button>
-      </div>
-
-      <figure className="visual-frame project-art candidate-art">
-        <img
-          src={asset("candidate-profile.webp")}
-          alt="Абстрактный профиль кандидата, собранный из слоев данных"
-          width={1536}
-          height={1024}
-          loading="lazy"
-        />
-      </figure>
+    <div className="slide-layout candidates-slide">
+      <Eyebrow>Проект 3</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>Прогноз до выхода кандидата в штат</h2>
+      <NumberedRows
+        className="candidate-process"
+        items={[
+          { title: "Исторические данные", text: "Резюме, тесты и решения о найме" },
+          { title: "Фактические продажи", text: "Результаты сотрудников после выхода" },
+          { title: "Профиль успеха", text: "Модель продавца на данных Global Dent" },
+          { title: "Прогноз", text: "Оценка нового кандидата до найма" },
+        ]}
+      />
+      <BenefitList
+        items={[
+          { title: "Ранний отсев", text: "До зарплаты и долгого обучения" },
+          { title: "Собственная модель", text: "На данных и KPI Global Dent" },
+          { title: "Честная проверка", text: "Сначала оцениваем достаточность истории" },
+        ]}
+      />
+      <DetailButton onClick={() => openPanel("candidates")}>Какие данные нужны</DetailButton>
     </div>
   );
 }
 
-function FilesIcon() {
-  return <Stack size={24} weight="duotone" aria-hidden="true" />;
-}
-
 function ContentSlide() {
-  const steps = [
-    {
-      icon: <MagnifyingGlass size={26} weight="duotone" />,
-      title: "Собирать",
-      text: "Конкуренты, Reels, TikTok, Shorts и YouTube",
-    },
-    {
-      icon: <ChartLineUp size={26} weight="duotone" />,
-      title: "Разбирать",
-      text: "Просмотры, хуки, структура и подача роликов",
-    },
-    {
-      icon: <Target size={26} weight="duotone" />,
-      title: "Выделять",
-      text: "Работающие форматы и идеи для продюсирования",
-    },
-    {
-      icon: <BookOpenText size={26} weight="duotone" />,
-      title: "Передавать команде",
-      text: "Готовая идея, формат и сценарий для реализации",
-    },
-  ];
-
   return (
-    <div className="slide-layout content-layout">
-      <div className="content-heading">
-        <div>
-          <p className="eyebrow">Аналитика для продюсирования</p>
-          <h2 data-slide-title tabIndex={-1}>
-            Полуавтоматический конвейер аналитики
-          </h2>
-          <p className="content-lead">
-            Система сама собирает и разбирает конкурентов и короткие видео, затем находит форматы и хуки, которые дают просмотры.
-          </p>
-          <div className="content-principle">
-            <ShieldCheck size={26} weight="duotone" aria-hidden="true" />
-            <div>
-              <strong>Контент не генерируем</strong>
-              <span>Усиливаем решения команды данными.</span>
-            </div>
-          </div>
-        </div>
+    <div className="slide-layout content-slide">
+      <Eyebrow>Аналитика для продюсирования</Eyebrow>
+      <div className="content-title-row">
+        <h2 data-slide-title tabIndex={-1}>Полуавтоматический конвейер аналитики</h2>
+        <aside>
+          <strong>Контент не генерируем</strong>
+          <span>Усиливаем решения команды данными.</span>
+        </aside>
       </div>
-
-      <div className="content-conveyor">
-          {steps.map((step, index) => (
-            <article className={`content-stage stage-${index + 1}`} key={step.title}>
-              <div className="stage-icon" aria-hidden="true">{step.icon}</div>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-            {index < steps.length - 1 ? (
-              <ArrowRight className="stage-arrow" size={22} weight="bold" aria-hidden="true" />
-            ) : null}
-          </article>
-        ))}
-      </div>
-
-      <div className="content-benefit-area">
-        <BenefitSectionLabel />
-        <div className="content-benefits">
-          <span>Решения опираются на просмотры и паттерны</span>
-          <span>Быстрее находить сильные форматы</span>
-          <span>Меньше ручного разбора конкурентов</span>
-          <span>Редакционное решение остается за командой</span>
-        </div>
-      </div>
+      <NumberedRows
+        className="content-process"
+        items={[
+          { title: "Собирать", text: "Конкуренты, Reels, TikTok, Shorts и YouTube" },
+          { title: "Разбирать", text: "Просмотры, паттерны, темы и структура роликов" },
+          { title: "Выделять", text: "Форматы и хуки, которые уже работают" },
+          { title: "Передавать команде", text: "Готовая идея, формат и сценарий" },
+        ]}
+      />
+      <BenefitList
+        items={[
+          { title: "Быстрее находить сильные форматы" },
+          { title: "Поддерживать регулярность" },
+          { title: "Переиспользовать идеи между каналами" },
+          { title: "Сохранять редакционный контроль" },
+        ]}
+      />
     </div>
   );
 }
 
 function InvestmentSlide({ openPanel }: SlideProps) {
-  return (
-    <div className="slide-layout investment-layout">
-      <div className="investment-heading">
-        <h2 data-slide-title tabIndex={-1}>
-          Короткие этапы. Понятный результат.
-        </h2>
-        <p>Каждые 1-2 недели появляется результат, который можно проверить на данных.</p>
-        <div className="investment-summary">
-          <span>Итого по 3 фиксированным направлениям</span>
-          <strong>≈ 900 000 ₽</strong>
-          <p>Оборачиваемость, кандидаты и контент. ИИ-бот и сопровождение считаются отдельно.</p>
-        </div>
-        <button type="button" className="text-button" onClick={() => openPanel("investment")}>
-          <SlidersHorizontal size={20} weight="bold" aria-hidden="true" />
-          Все этапы и суммы
-          <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
-        </button>
-      </div>
+  const items = [
+    { title: "Оборачиваемость", amount: "≈ 530 000 ₽", first: "Discovery 80 000 ₽", time: "≈ 9 недель" },
+    { title: "Кандидаты", amount: "≈ 270 000 ₽", first: "Discovery 80 000 ₽", time: "≈ 3 недели" },
+    { title: "Контент", amount: "100 000 ₽", first: "Пилот", time: "2 недели" },
+    { title: "ИИ-бот", amount: "Помесячно", first: "В рамках сопровождения", time: "Системы от 20 000 ₽/мес" },
+  ];
 
-      <div className="investment-grid">
-        <article className="investment-card investment-primary">
-          <div className="investment-icon"><ChartLineUp size={28} weight="duotone" /></div>
-          <h3>Оборачиваемость</h3>
-          <p className="investment-price-label">Ориентир полного направления</p>
-          <strong>≈ 530 000 ₽</strong>
-          <div className="investment-card-details">
-            <span>Первый этап: Discovery 80 000 ₽</span>
-            <span>Срок: ≈ 9 недель</span>
-          </div>
-        </article>
-        <article className="investment-card">
-          <div className="investment-icon"><UserFocus size={28} weight="duotone" /></div>
-          <h3>Кандидаты</h3>
-          <p className="investment-price-label">Ориентир полного направления</p>
-          <strong>≈ 270 000 ₽</strong>
-          <div className="investment-card-details">
-            <span>Первый этап: Discovery 80 000 ₽</span>
-            <span>Срок: ≈ 3 недели</span>
-          </div>
-        </article>
-        <article className="investment-card investment-content-card">
-          <div className="investment-icon"><VideoCamera size={28} weight="duotone" /></div>
-          <h3>Контент</h3>
-          <p className="investment-price-label">Стоимость пилота</p>
-          <strong>100 000 ₽</strong>
-          <div className="investment-card-details">
-            <span>1 канал</span>
-            <span>Срок: 2 недели</span>
-          </div>
-        </article>
-        <article className="investment-card investment-support-card">
-          <div className="investment-icon"><ChatCircleDots size={28} weight="duotone" /></div>
-          <h3>ИИ-бот</h3>
-          <p className="investment-price-label">Модель оплаты</p>
-          <strong>Помесячно</strong>
-          <div className="investment-card-details support-price">
-            <span>В рамках сопровождения</span>
-            <span><CurrencyRub size={18} weight="bold" />Новые системы от 20 000 ₽/мес</span>
-          </div>
-        </article>
+  return (
+    <div className="slide-layout investment-slide">
+      <div className="investment-topline">
+        <div>
+          <Eyebrow>Запуск и инвестиции</Eyebrow>
+          <h2 data-slide-title tabIndex={-1}>Короткие этапы. Проверяемый результат.</h2>
+        </div>
+      </div>
+      <div className="investment-cards">
+        {items.map((item) => (
+          <article className="investment-card" key={item.title}>
+            <h3>{item.title}</h3>
+            <strong>{item.amount}</strong>
+            <p>{item.first}</p>
+            <span>{item.time}</span>
+          </article>
+        ))}
+      </div>
+      <div className="investment-total">
+        <span>Итого по трём фиксированным направлениям</span>
+        <strong>≈ 900 000 ₽</strong>
+      </div>
+      <div className="investment-bottom">
+        <p>Оборачиваемость, кандидаты и контент входят в итог. ИИ-бот и сопровождение считаются отдельно.</p>
+        <DetailButton onClick={() => openPanel("investment")}>Все этапы и суммы</DetailButton>
       </div>
     </div>
   );
 }
 
 function NextStepSlide() {
+  const starts = [
+    {
+      label: "Приоритет №1",
+      title: "Discovery оборачиваемости",
+      text: "Разбираем 1С, структуру складских данных и правила закупки.",
+      inputs: ["Доступ к 1С", "Остатки и движение", "Правила закупок"],
+    },
+    {
+      label: "Независимый старт",
+      title: "Discovery кандидатов",
+      text: "Проверяем историю найма и связываем её с фактическими продажами.",
+      inputs: ["Резюме и тесты", "История найма", "Фактические продажи"],
+    },
+  ];
+
   return (
-    <div className="slide-layout next-layout">
-      <div className="next-heading">
-        <PhoneCall size={34} weight="duotone" aria-hidden="true" />
-        <h2 data-slide-title tabIndex={-1}>
-          Следующий шаг: рабочий звонок
-        </h2>
-        <p>Показываем концепты, фиксируем приоритеты и выбираем первый независимый старт.</p>
+    <div className="slide-layout next-slide">
+      <Eyebrow>Следующий шаг</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>Рабочий звонок</h2>
+      <p className="next-intro">Показываем концепты, фиксируем приоритеты и выбираем первый независимый старт.</p>
+      <div className="start-grid">
+        {starts.map((start) => (
+          <article className="start-card" key={start.title}>
+            <span>{start.label}</span>
+            <h3>{start.title}</h3>
+            <p>{start.text}</p>
+            <ul>
+              {start.inputs.map((input) => <li key={input}>{input}</li>)}
+            </ul>
+          </article>
+        ))}
       </div>
-
-      <div className="start-paths">
-        <article className="start-path path-turnover">
-          <div className="path-head">
-            <ChartLineUp size={30} weight="duotone" aria-hidden="true" />
-            <span>Приоритет №1</span>
-          </div>
-          <h3>Discovery оборачиваемости</h3>
-          <p>Разбираем 1С, структуру складских данных и правила закупки.</p>
-          <div className="path-inputs">
-            <span>Доступ к 1С</span>
-            <span>Остатки и движение</span>
-            <span>Правила закупок</span>
-          </div>
-        </article>
-
-        <article className="start-path path-candidates">
-          <div className="path-head">
-            <UserFocus size={30} weight="duotone" aria-hidden="true" />
-            <span>Независимый старт</span>
-          </div>
-          <h3>Discovery кандидатов</h3>
-          <p>Проверяем историю найма и связываем ее с фактическими продажами.</p>
-          <div className="path-inputs">
-            <span>Резюме и тесты</span>
-            <span>История найма</span>
-            <span>Фактические продажи</span>
-          </div>
-        </article>
-      </div>
-
-      <div className="final-statement">
-        <span className="final-statement-icon">
-          <CalendarBlank size={26} weight="duotone" aria-hidden="true" />
-        </span>
-        <div className="final-statement-copy">
-          <span>Принцип запуска</span>
-          <strong>
-            <span>Сначала ТЗ и точная смета.</span>
-            <span>Затем разработка.</span>
-          </strong>
-        </div>
+      <div className="final-principle">
+        <span>Принцип запуска</span>
+        <strong>Сначала ТЗ и точная смета. Затем разработка.</strong>
       </div>
     </div>
   );
