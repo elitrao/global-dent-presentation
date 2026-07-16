@@ -158,11 +158,10 @@ export function App() {
           ) : (
             <div className="wordmark" aria-label="Global Dent и Synapt">
               <span className="wordmark-mark" aria-hidden="true" />
-              <span>GLOBAL DENT</span>
-              <span className="wordmark-collab"><b>×</b> SYNAPT</span>
+              <span>Global Dent</span>
+              <span className="wordmark-collab"><b>×</b> Synapt</span>
             </div>
           )}
-          <p className="header-title">{activeSlide.title}</p>
         </header>
 
         <main className="slides-viewport" aria-live="polite">
@@ -202,26 +201,8 @@ export function App() {
             disabled={activeIndex === 0}
             aria-label="Предыдущий слайд"
           >
-            <ArrowLeft size={20} weight="bold" aria-hidden="true" />
+            <ArrowLeft size={26} weight="bold" aria-hidden="true" />
           </button>
-
-          <div className="nav-center">
-            <span className="slide-count">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-            </span>
-            <div className="slide-rail">
-              {slides.map((slide, index) => (
-                <button
-                  type="button"
-                  key={slide.id}
-                  className={index === activeIndex ? "rail-segment is-active" : "rail-segment"}
-                  onClick={() => goTo(index)}
-                  aria-label={`Открыть слайд ${index + 1}: ${slide.title}`}
-                  aria-current={index === activeIndex ? "step" : undefined}
-                />
-              ))}
-            </div>
-          </div>
 
           <button
             type="button"
@@ -230,7 +211,7 @@ export function App() {
             disabled={activeIndex === slides.length - 1}
             aria-label="Следующий слайд"
           >
-            <ArrowRight size={20} weight="bold" aria-hidden="true" />
+            <ArrowRight size={26} weight="bold" aria-hidden="true" />
           </button>
         </nav>
       </div>

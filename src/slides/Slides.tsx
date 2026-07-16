@@ -58,12 +58,12 @@ function HeroSlide() {
       <div className="title-slide-main">
         <Eyebrow>ИИ-дорожная карта</Eyebrow>
         <h1 data-slide-title tabIndex={-1}>
-          Четыре продукта.
+          Четыре продукта
           <br />
-          Одна инфраструктура.
+          Одна инфраструктура
         </h1>
         <p className="title-deck-copy">
-          Данные подключаются один раз. Каждый следующий проект запускается быстрее и экономичнее.
+          Данные подключаются один раз. Каждый следующий проект запускается быстрее и экономичнее
         </p>
       </div>
       <div className="title-slide-footer">
@@ -89,11 +89,11 @@ function ContextSlide() {
       <div className="context-columns">
         <article>
           <span>Операционный контур</span>
-          <p>Продажи растут на данных, но анализ, планирование и проверка информации по-прежнему требуют участия команды.</p>
+          <p>Продажи растут на данных, но анализ, планирование и проверка информации по-прежнему требуют участия команды</p>
         </article>
         <article>
           <span>Оценка нового продавца</span>
-          <p>Эффективность становится понятна только через полгода, когда ресурсы уже вложены.</p>
+          <p>Эффективность становится понятна только через полгода, когда ресурсы уже вложены</p>
         </article>
       </div>
       <div className="metric-strip" aria-label="Ключевые показатели">
@@ -138,7 +138,7 @@ function InfrastructureSlide() {
           <p>{cards[0].text}</p>
         </article>
       </div>
-      <p className="reuse-note">Каждый новый продукт использует уже подключённые данные и накопленную экспертизу.</p>
+      <p className="reuse-note">Каждый новый продукт использует уже подключённые данные и накопленную экспертизу</p>
     </div>
   );
 }
@@ -202,7 +202,7 @@ function BotSlide() {
           { title: "Накопление корпоративных знаний" },
         ]}
       />
-      <p className="project-note">Развитие идёт в рамках сопровождения. Крупные функциональные блоки согласуются отдельно.</p>
+      <p className="project-note">Развитие идёт в рамках сопровождения. Крупные функциональные блоки согласуются отдельно</p>
     </div>
   );
 }
@@ -241,7 +241,7 @@ function ContentSlide() {
         <h2 data-slide-title tabIndex={-1}>Полуавтоматический конвейер аналитики</h2>
         <aside>
           <strong>Контент не генерируем</strong>
-          <span>Усиливаем решения команды данными.</span>
+          <span>Усиливаем решения команды данными</span>
         </aside>
       </div>
       <NumberedRows
@@ -278,7 +278,7 @@ function InvestmentSlide({ openPanel }: SlideProps) {
       <div className="investment-topline">
         <div>
           <Eyebrow>Запуск и инвестиции</Eyebrow>
-          <h2 data-slide-title tabIndex={-1}>Короткие этапы. Проверяемый результат.</h2>
+          <h2 data-slide-title tabIndex={-1}>Короткие этапы. Проверяемый результат</h2>
         </div>
       </div>
       <div className="investment-cards">
@@ -296,7 +296,7 @@ function InvestmentSlide({ openPanel }: SlideProps) {
         <strong>≈ 900 000 ₽</strong>
       </div>
       <div className="investment-bottom">
-        <p>Оборачиваемость, кандидаты и контент входят в итог. ИИ-бот и сопровождение считаются отдельно.</p>
+        <p>Оборачиваемость, кандидаты и контент входят в итог. ИИ-бот и сопровождение считаются отдельно</p>
         <DetailButton onClick={() => openPanel("investment")}>Все этапы и суммы</DetailButton>
       </div>
     </div>
@@ -308,13 +308,13 @@ function NextStepSlide() {
     {
       label: "Приоритет №1",
       title: "Discovery оборачиваемости",
-      text: "Разбираем 1С, структуру складских данных и правила закупки.",
+      text: "Разбираем 1С, структуру складских данных и правила закупки",
       inputs: ["Доступ к 1С", "Остатки и движение", "Правила закупок"],
     },
     {
       label: "Независимый старт",
       title: "Discovery кандидатов",
-      text: "Проверяем историю найма и связываем её с фактическими продажами.",
+      text: "Проверяем историю найма и связываем её с фактическими продажами",
       inputs: ["Резюме и тесты", "История найма", "Фактические продажи"],
     },
   ];
@@ -323,7 +323,7 @@ function NextStepSlide() {
     <div className="slide-layout next-slide">
       <Eyebrow>Следующий шаг</Eyebrow>
       <h2 data-slide-title tabIndex={-1}>Рабочий звонок</h2>
-      <p className="next-intro">Показываем концепты, фиксируем приоритеты и выбираем первый независимый старт.</p>
+      <p className="next-intro">Показываем концепты, фиксируем приоритеты и выбираем первый независимый старт</p>
       <div className="start-grid">
         {starts.map((start) => (
           <article className="start-card" key={start.title}>
@@ -338,7 +338,7 @@ function NextStepSlide() {
       </div>
       <div className="final-principle">
         <span>Принцип запуска</span>
-        <strong>Сначала ТЗ и точная смета. Затем разработка.</strong>
+        <strong>Сначала ТЗ и точная смета. Затем разработка</strong>
       </div>
     </div>
   );
