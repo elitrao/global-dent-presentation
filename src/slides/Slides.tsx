@@ -81,7 +81,9 @@ function HeroSlide() {
         transition={{ duration: reduceMotion ? 0.01 : 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <img
-          src={asset("hero-infrastructure.png")}
+          src={asset("hero-infrastructure-1200.webp")}
+          srcSet={`${asset("hero-infrastructure-768.webp")} 768w, ${asset("hero-infrastructure-1200.webp")} 1200w`}
+          sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1100px) calc(100vw - 48px), 58vw"
           alt="Абстрактная янтарная инфраструктура, объединяющая несколько продуктов"
           width={1536}
           height={1024}
@@ -189,7 +191,7 @@ function InventorySlide({ openPanel }: SlideProps) {
     <div className="slide-layout project-layout project-inventory">
       <figure className="visual-frame project-art inventory-art">
         <img
-          src={asset("inventory-forecast.png")}
+          src={asset("inventory-forecast.webp")}
           alt="Абстрактная система запасов с янтарной линией прогноза"
           width={1536}
           height={1024}
@@ -350,7 +352,7 @@ function CandidatesSlide({ openPanel }: SlideProps) {
 
       <figure className="visual-frame project-art candidate-art">
         <img
-          src={asset("candidate-profile.png")}
+          src={asset("candidate-profile.webp")}
           alt="Абстрактный профиль кандидата, собранный из слоев данных"
           width={1536}
           height={1024}
