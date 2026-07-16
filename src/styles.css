@@ -1010,7 +1010,8 @@ h3 {
 }
 
 .content-heading h2 {
-  max-width: 13ch;
+  width: 100%;
+  max-width: none;
 }
 
 .content-conveyor {
@@ -1055,7 +1056,7 @@ h3 {
 }
 
 .content-stage p {
-  max-width: 220px;
+  max-width: none;
   color: var(--faint);
   font-size: 13px;
   line-height: 1.45;
