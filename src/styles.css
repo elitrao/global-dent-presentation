@@ -2065,7 +2065,7 @@ h3 {
   .visual-frame-hero img {
     object-fit: contain;
     object-position: center;
-    transform: none;
+    transform: translateX(-16%);
   }
 
   .metric-composition {
