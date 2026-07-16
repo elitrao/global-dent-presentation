@@ -980,20 +980,8 @@ p {
   left: var(--page-x);
   right: var(--page-x);
   bottom: clamp(18px, 2.6vh, 28px);
-  height: 54px;
+  height: 38px;
   pointer-events: none;
-}
-
-.presentation-nav::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  right: -8px;
-  width: 126px;
-  height: 68px;
-  border: 1px solid var(--border);
-  border-radius: 36px;
-  background: var(--surface-soft);
 }
 
 .nav-center {
@@ -1038,34 +1026,31 @@ p {
   position: absolute;
   top: 0;
   right: 0;
-  width: 54px;
-  height: 54px;
+  width: 38px;
+  height: 38px;
   padding: 0;
   display: grid;
   place-items: center;
   border: 1px solid var(--border);
-  border-radius: 50%;
-  border-color: rgb(212 184 150 / 48%);
-  background: var(--accent);
-  color: var(--bg);
+  border-radius: 8px;
+  background: rgb(245 245 245 / 8%);
+  color: var(--text);
   cursor: pointer;
   pointer-events: auto;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .nav-arrow:first-child {
-  right: 64px;
+  right: 48px;
 }
 
 .nav-arrow:hover:not(:disabled) {
-  background: #e0c4a2;
-  border-color: #e0c4a2;
+  background: rgb(245 245 245 / 13%);
+  border-color: rgb(212 184 150 / 35%);
 }
 
 .nav-arrow:disabled {
-  opacity: 0.28;
-  background: var(--surface);
-  color: var(--text);
+  opacity: 0.25;
   cursor: default;
 }
 
@@ -2170,15 +2155,15 @@ p {
 
 .presentation-nav,
 .nav-arrow {
-  height: 54px;
+  height: 38px;
 }
 
 .nav-arrow {
-  width: 54px;
+  width: 38px;
 }
 
 .nav-arrow:first-child {
-  right: 64px;
+  right: 48px;
 }
 
 @media (max-width: 760px) {
@@ -2211,24 +2196,21 @@ p {
 
   .presentation-nav {
     right: 18px;
-    bottom: 14px;
-    height: 54px;
-  }
-
-  .presentation-nav::before {
-    top: -6px;
-    right: -7px;
-    width: 124px;
-    height: 66px;
+    bottom: 16px;
+    height: 36px;
   }
 
   .nav-arrow {
-    width: 54px;
-    height: 54px;
+    width: 36px;
+    height: 36px;
   }
 
   .nav-arrow:first-child {
-    right: 64px;
+    right: 44px;
+  }
+
+  .presentation-shell {
+    touch-action: none;
   }
 }
 

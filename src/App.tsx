@@ -26,6 +26,7 @@ export function App() {
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const slideRef = useRef<HTMLElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
+  const wheelLocked = useRef(false);
   const reduceMotion = useReducedMotion();
 
   const goTo = useCallback(
@@ -112,9 +113,35 @@ export function App() {
     const deltaY = event.clientY - pointerStart.current.y;
     pointerStart.current = null;
 
+    const mobileVerticalSwipe = window.matchMedia("(max-width: 760px)").matches
+      && Math.abs(deltaY) >= 54
+      && Math.abs(deltaY) > Math.abs(deltaX) * 1.1;
+
+    if (mobileVerticalSwipe) {
+      if (deltaY < 0) next();
+      else previous();
+      return;
+    }
+
     if (Math.abs(deltaX) < 54 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
     if (deltaX < 0) next();
     else previous();
+  };
+
+  const handleWheel = (event: React.WheelEvent) => {
+    if (panelId || !window.matchMedia("(max-width: 760px)").matches) return;
+    if (Math.abs(event.deltaY) < 28 || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+
+    event.preventDefault();
+    if (wheelLocked.current) return;
+
+    wheelLocked.current = true;
+    if (event.deltaY > 0) next();
+    else previous();
+
+    window.setTimeout(() => {
+      wheelLocked.current = false;
+    }, transitionDuration * 1000 + 140);
   };
 
   const transitionDuration = reduceMotion || exportMode ? 0.01 : 0.55;
@@ -146,6 +173,7 @@ export function App() {
         className="presentation-shell"
         aria-hidden={panel ? true : undefined}
         inert={panel ? true : undefined}
+        onWheel={handleWheel}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerCancel={() => {
@@ -201,7 +229,7 @@ export function App() {
             disabled={activeIndex === 0}
             aria-label="Предыдущий слайд"
           >
-            <ArrowLeft size={26} weight="bold" aria-hidden="true" />
+            <ArrowLeft size={20} weight="bold" aria-hidden="true" />
           </button>
 
           <button
@@ -211,7 +239,7 @@ export function App() {
             disabled={activeIndex === slides.length - 1}
             aria-label="Следующий слайд"
           >
-            <ArrowRight size={26} weight="bold" aria-hidden="true" />
+            <ArrowRight size={20} weight="bold" aria-hidden="true" />
           </button>
         </nav>
       </div>
