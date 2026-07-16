@@ -8,7 +8,6 @@ import {
   ChartLineUp,
   ChatCircleDots,
   CheckCircle,
-  Clock,
   CurrencyRub,
   Database,
   FlowArrow,
@@ -129,15 +128,8 @@ function ContextSlide() {
         </article>
         <article className="metric metric-manual">
           <span className="metric-label">Операционный контур</span>
-          <div className="metric-manual-main">
-            <div className="metric-icon" aria-hidden="true">
-              <Clock size={27} weight="duotone" />
-            </div>
-            <div>
-              <h3>Много ручной работы</h3>
-              <p>Анализ, планирование и проверка информации требуют участия команды.</p>
-            </div>
-          </div>
+          <strong className="metric-emphasis">Ручная работа</strong>
+          <p>Анализ, планирование и проверка информации требуют участия команды.</p>
         </article>
         <article className="metric metric-hiring">
           <span className="metric-label">Оценка нового продавца</span>

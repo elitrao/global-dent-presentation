@@ -22,6 +22,7 @@ export function App() {
   const [activeIndex, setActiveIndex] = useState(() => indexFromHash());
   const [direction, setDirection] = useState(1);
   const [panelId, setPanelId] = useState<DetailPanelId | null>(null);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
   const slideRef = useRef<HTMLElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const reduceMotion = useReducedMotion();
@@ -117,6 +118,15 @@ export function App() {
 
   const transitionDuration = reduceMotion ? 0.01 : 0.55;
 
+  useEffect(() => {
+    setHeaderScrolled(false);
+  }, [activeIndex]);
+
+  const handleSlideScroll = (event: React.UIEvent<HTMLElement>) => {
+    const nextScrolled = event.currentTarget.scrollTop > 10;
+    setHeaderScrolled((current) => (current === nextScrolled ? current : nextScrolled));
+  };
+
   return (
     <div className="presentation-root">
       <motion.div
@@ -141,7 +151,7 @@ export function App() {
           pointerStart.current = null;
         }}
       >
-        <header className="presentation-header">
+        <header className={headerScrolled ? "presentation-header is-scrolled" : "presentation-header"}>
           <div className="wordmark" aria-label="Global Dent и Synapt">
             <span className="wordmark-mark" aria-hidden="true" />
             <span>GLOBAL DENT</span>
@@ -157,6 +167,7 @@ export function App() {
               key={activeSlide.id}
               id={activeSlide.id}
               className="slide"
+              onScroll={handleSlideScroll}
               aria-label={`${activeIndex + 1} из ${slides.length}. ${activeSlide.title}`}
               custom={direction}
               initial={

@@ -153,6 +153,30 @@ ul {
   pointer-events: none;
 }
 
+.presentation-header::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(21, 20, 18, 0.88), rgba(18, 17, 15, 0.7));
+  opacity: 0;
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  transition: opacity 220ms var(--ease), border-color 220ms var(--ease);
+}
+
+.presentation-header.is-scrolled::before {
+  border-color: rgba(255, 180, 62, 0.12);
+  opacity: 1;
+}
+
+.presentation-header .wordmark,
+.presentation-header .header-title {
+  position: relative;
+  z-index: 1;
+}
+
 .wordmark {
   display: inline-flex;
   align-items: center;
@@ -167,7 +191,7 @@ ul {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: var(--muted);
+  color: var(--text);
   letter-spacing: 0.06em;
 }
 
@@ -426,30 +450,18 @@ h3 {
   border-top: 1px solid var(--line-neutral);
 }
 
-.metric-icon {
-  display: grid;
-  flex: 0 0 52px;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border: 1px solid rgba(255, 180, 62, 0.2);
-  border-radius: 17px;
-  color: var(--accent);
-  background: rgba(255, 180, 62, 0.08);
+.metric-emphasis {
+  margin-top: auto;
+  color: var(--accent-bright);
+  font-size: clamp(30px, 2.8vw, 44px);
+  font-weight: 720;
+  letter-spacing: -0.045em;
+  line-height: 1;
 }
 
-.metric-manual h3 {
-  margin-bottom: 7px;
-}
-
-.metric-manual-main {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.metric-manual-main > div:last-child {
-  max-width: 340px;
+.metric-manual > p {
+  max-width: 360px;
+  margin-top: 12px;
 }
 
 .metric-hiring {
@@ -509,6 +521,7 @@ h3 {
   align-items: baseline;
   gap: 10px;
   color: var(--accent-bright);
+  margin-top: auto;
 }
 
 .hiring-number strong {
@@ -750,18 +763,10 @@ h3 {
   align-items: center;
   gap: 8px;
   margin: 10px 0 8px;
-  color: var(--accent-bright);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
-}
-
-.benefit-section-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  margin-left: 4px;
-  background: rgba(255, 180, 62, 0.2);
 }
 
 .benefit-section-label svg {
@@ -2057,6 +2062,12 @@ h3 {
     border-radius: 22px;
   }
 
+  .visual-frame-hero img {
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
   .metric-composition {
     display: grid;
     grid-template-columns: 1fr;
@@ -2068,7 +2079,7 @@ h3 {
   .metric {
     grid-column: 1;
     grid-row: auto;
-    min-height: 168px;
+    min-height: 190px;
     padding: 20px;
     border-radius: 0;
   }
@@ -2076,7 +2087,7 @@ h3 {
   .metric-volume {
     grid-column: 1;
     grid-row: 1;
-    min-height: 230px;
+    min-height: 200px;
   }
 
   .metric-clients {
@@ -2084,25 +2095,33 @@ h3 {
     grid-row: 2;
     border-top: 1px solid var(--line-neutral);
     border-left: 0;
+    min-height: 200px;
   }
 
   .metric-manual {
     grid-column: 1;
     grid-row: 3;
+    min-height: 210px;
   }
 
   .metric-hiring {
     grid-column: 1;
     grid-row: 4;
     border-left: 0;
+    min-height: 210px;
   }
 
-  .metric-volume .metric-number {
-    font-size: 54px;
-  }
-
+  .metric-volume .metric-number,
   .metric-clients .metric-number {
-    font-size: 42px;
+    font-size: clamp(42px, 12vw, 48px);
+  }
+
+  .metric-emphasis {
+    font-size: 36px;
+  }
+
+  .hiring-number strong {
+    font-size: 68px;
   }
 
   .metric-hiring p {
