@@ -7,6 +7,28 @@ import { slides } from "./slides/Slides";
 import type { DetailPanelId } from "./types";
 
 const clampIndex = (value: number) => Math.max(0, Math.min(slides.length - 1, value));
+type TransitionAxis = "x" | "y";
+type SlideMotionIntent = {
+  axis: TransitionAxis;
+  direction: number;
+  reduceMotion: boolean;
+};
+
+const slideVariants = {
+  enter: ({ axis, direction, reduceMotion }: SlideMotionIntent) => {
+    if (reduceMotion) return { opacity: 1, x: 0, y: 0 };
+    return axis === "y"
+      ? { opacity: 0, x: 0, y: direction > 0 ? "11vh" : "-11vh" }
+      : { opacity: 0, x: direction > 0 ? "11vw" : "-11vw", y: 0 };
+  },
+  center: { opacity: 1, x: 0, y: 0 },
+  exit: ({ axis, direction, reduceMotion }: SlideMotionIntent) => {
+    if (reduceMotion) return { opacity: 1, x: 0, y: 0 };
+    return axis === "y"
+      ? { opacity: 0, x: 0, y: direction > 0 ? "-7vh" : "7vh" }
+      : { opacity: 0, x: direction > 0 ? "-7vw" : "7vw", y: 0 };
+  },
+};
 
 function indexFromHash(hash = window.location.hash) {
   const match = hash.match(/^#slide-(\d+)$/);
@@ -22,6 +44,7 @@ export function App() {
   const exportMode = new URLSearchParams(window.location.search).has("export");
   const [activeIndex, setActiveIndex] = useState(() => indexFromHash());
   const [direction, setDirection] = useState(1);
+  const [transitionAxis, setTransitionAxis] = useState<TransitionAxis>("x");
   const [panelId, setPanelId] = useState<DetailPanelId | null>(null);
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const slideRef = useRef<HTMLElement>(null);
@@ -30,11 +53,16 @@ export function App() {
   const reduceMotion = useReducedMotion();
 
   const goTo = useCallback(
-    (target: number, historyMode: "push" | "replace" | "none" = "push") => {
+    (
+      target: number,
+      historyMode: "push" | "replace" | "none" = "push",
+      axis: TransitionAxis = "x",
+    ) => {
       const nextIndex = clampIndex(target);
       if (nextIndex === activeIndex) return;
 
       setDirection(nextIndex > activeIndex ? 1 : -1);
+      setTransitionAxis(axis);
       setActiveIndex(nextIndex);
 
       if (historyMode !== "none") {
@@ -56,6 +84,7 @@ export function App() {
     const syncFromLocation = () => {
       const target = indexFromHash();
       setDirection(target >= activeIndex ? 1 : -1);
+      setTransitionAxis("x");
       setActiveIndex(target);
     };
 
@@ -96,6 +125,11 @@ export function App() {
   const activeSlide = slides[activeIndex];
   const ActiveSlide = activeSlide.component;
   const panel = panelId ? detailPanels[panelId] : null;
+  const motionIntent: SlideMotionIntent = {
+    axis: transitionAxis,
+    direction,
+    reduceMotion: Boolean(reduceMotion || exportMode),
+  };
 
   const focusSlideTitle = () => {
     const title = slideRef.current?.querySelector<HTMLElement>("[data-slide-title]");
@@ -118,8 +152,8 @@ export function App() {
       && Math.abs(deltaY) > Math.abs(deltaX) * 1.1;
 
     if (mobileVerticalSwipe) {
-      if (deltaY < 0) next();
-      else previous();
+      if (deltaY < 0) goTo(activeIndex + 1, "push", "y");
+      else goTo(activeIndex - 1, "push", "y");
       return;
     }
 
@@ -136,8 +170,8 @@ export function App() {
     if (wheelLocked.current) return;
 
     wheelLocked.current = true;
-    if (event.deltaY > 0) next();
-    else previous();
+    if (event.deltaY > 0) goTo(activeIndex + 1, "push", "y");
+    else goTo(activeIndex - 1, "push", "y");
 
     window.setTimeout(() => {
       wheelLocked.current = false;
@@ -193,7 +227,7 @@ export function App() {
         </header>
 
         <main className="slides-viewport" aria-live="polite">
-          <AnimatePresence mode="wait" initial={false} custom={direction}>
+          <AnimatePresence mode="wait" initial={false} custom={motionIntent}>
             <motion.section
               ref={slideRef}
               key={activeSlide.id}
@@ -201,18 +235,11 @@ export function App() {
               className="slide"
               onScroll={handleSlideScroll}
               aria-label={`${activeIndex + 1} из ${slides.length}. ${activeSlide.title}`}
-              custom={direction}
-              initial={
-                reduceMotion
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: direction > 0 ? "11vw" : "-11vw" }
-              }
-              animate={{ opacity: 1, x: 0 }}
-              exit={
-                reduceMotion
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: direction > 0 ? "-7vw" : "7vw" }
-              }
+              custom={motionIntent}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
               transition={{ duration: transitionDuration, ease: [0.16, 1, 0.3, 1] }}
               onAnimationComplete={focusSlideTitle}
             >

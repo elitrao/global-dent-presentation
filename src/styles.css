@@ -237,6 +237,10 @@ p {
   text-transform: uppercase;
 }
 
+.swipe-hint {
+  display: none;
+}
+
 .context-slide h2 {
   max-width: 980px;
 }
@@ -1259,6 +1263,27 @@ p {
   }
 }
 
+@media (min-width: 761px) and (max-width: 1024px) {
+  .swipe-hint {
+    position: absolute;
+    top: 25%;
+    left: var(--page-x);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  .swipe-hint span {
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 300;
+  }
+}
+
 @media (max-width: 760px) {
   :root {
     --page-x: 18px;
@@ -1347,6 +1372,25 @@ p {
   .title-slide-footer span:last-child {
     max-width: 135px;
     text-align: right;
+  }
+
+  .swipe-hint {
+    position: absolute;
+    top: 24%;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .swipe-hint span {
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 300;
   }
 
   .context-columns {
@@ -1535,6 +1579,10 @@ p {
     font-size: 9px;
   }
 
+  .inventory-slide .detail-link {
+    margin-top: clamp(18px, 3vh, 26px);
+  }
+
   .two-by-two {
     margin-top: 16px;
     gap: 8px;
@@ -1574,6 +1622,11 @@ p {
     margin-top: 9px;
     font-size: 8px;
     line-height: 1.35;
+  }
+
+  .bot-slide .project-note {
+    width: calc(100% - 94px);
+    margin-top: clamp(18px, 3vh, 26px);
   }
 
   .candidate-process {

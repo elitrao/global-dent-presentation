@@ -66,6 +66,10 @@ function HeroSlide() {
           Данные подключаются один раз. Каждый следующий проект запускается быстрее и экономичнее
         </p>
       </div>
+      <p className="swipe-hint">
+        <span aria-hidden="true">↕</span>
+        Свайпайте вверх или вниз
+      </p>
       <div className="title-slide-footer">
         <span>Global Dent</span>
         <span>ИИ-продукты на общей базе данных</span>
