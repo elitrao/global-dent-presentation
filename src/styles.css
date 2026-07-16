@@ -107,6 +107,14 @@ ul {
     linear-gradient(135deg, #12110f 0%, #0f0f0e 52%, #14120f 100%);
 }
 
+.presentation-root.is-exporting .presentation-nav {
+  display: none;
+}
+
+.presentation-root.is-exporting .slide {
+  overflow: hidden;
+}
+
 .ambient-glow {
   position: fixed;
   z-index: 0;

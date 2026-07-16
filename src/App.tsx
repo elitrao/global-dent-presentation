@@ -19,6 +19,7 @@ function slideHash(index: number) {
 }
 
 export function App() {
+  const exportMode = new URLSearchParams(window.location.search).has("export");
   const [activeIndex, setActiveIndex] = useState(() => indexFromHash());
   const [direction, setDirection] = useState(1);
   const [panelId, setPanelId] = useState<DetailPanelId | null>(null);
@@ -116,7 +117,7 @@ export function App() {
     else previous();
   };
 
-  const transitionDuration = reduceMotion ? 0.01 : 0.55;
+  const transitionDuration = reduceMotion || exportMode ? 0.01 : 0.55;
 
   useEffect(() => {
     setHeaderScrolled(false);
@@ -128,7 +129,7 @@ export function App() {
   };
 
   return (
-    <div className="presentation-root">
+    <div className={exportMode ? "presentation-root is-exporting" : "presentation-root"}>
       <motion.div
         className="ambient-glow"
         aria-hidden="true"
