@@ -1,0 +1,225 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { DetailPanel } from "./components/DetailPanel";
+import { detailPanels } from "./content";
+import { slides } from "./slides/Slides";
+import type { DetailPanelId } from "./types";
+
+const clampIndex = (value: number) => Math.max(0, Math.min(slides.length - 1, value));
+
+function indexFromHash(hash = window.location.hash) {
+  const match = hash.match(/^#slide-(\d+)$/);
+  if (!match) return 0;
+  return clampIndex(Number(match[1]) - 1);
+}
+
+function slideHash(index: number) {
+  return `#slide-${index + 1}`;
+}
+
+export function App() {
+  const [activeIndex, setActiveIndex] = useState(() => indexFromHash());
+  const [direction, setDirection] = useState(1);
+  const [panelId, setPanelId] = useState<DetailPanelId | null>(null);
+  const slideRef = useRef<HTMLElement>(null);
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
+  const reduceMotion = useReducedMotion();
+
+  const goTo = useCallback(
+    (target: number, historyMode: "push" | "replace" | "none" = "push") => {
+      const nextIndex = clampIndex(target);
+      if (nextIndex === activeIndex) return;
+
+      setDirection(nextIndex > activeIndex ? 1 : -1);
+      setActiveIndex(nextIndex);
+
+      if (historyMode !== "none") {
+        const method = historyMode === "replace" ? "replaceState" : "pushState";
+        window.history[method](null, "", slideHash(nextIndex));
+      }
+    },
+    [activeIndex],
+  );
+
+  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const previous = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+
+  useEffect(() => {
+    if (!window.location.hash.match(/^#slide-(\d+)$/)) {
+      window.history.replaceState(null, "", slideHash(activeIndex));
+    }
+
+    const syncFromLocation = () => {
+      const target = indexFromHash();
+      setDirection(target >= activeIndex ? 1 : -1);
+      setActiveIndex(target);
+    };
+
+    window.addEventListener("popstate", syncFromLocation);
+    window.addEventListener("hashchange", syncFromLocation);
+    return () => {
+      window.removeEventListener("popstate", syncFromLocation);
+      window.removeEventListener("hashchange", syncFromLocation);
+    };
+  }, [activeIndex]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (panelId) return;
+
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        next();
+      } else if (["ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        previous();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        goTo(0);
+      } else if (event.key === "End") {
+        event.preventDefault();
+        goTo(slides.length - 1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [goTo, next, panelId, previous]);
+
+  const activeSlide = slides[activeIndex];
+  const ActiveSlide = activeSlide.component;
+  const panel = panelId ? detailPanels[panelId] : null;
+
+  const focusSlideTitle = () => {
+    const title = slideRef.current?.querySelector<HTMLElement>("[data-slide-title]");
+    title?.focus({ preventScroll: true });
+  };
+
+  const handlePointerDown = (event: React.PointerEvent) => {
+    if (event.pointerType === "mouse") return;
+    pointerStart.current = { x: event.clientX, y: event.clientY };
+  };
+
+  const handlePointerUp = (event: React.PointerEvent) => {
+    if (!pointerStart.current || panelId) return;
+    const deltaX = event.clientX - pointerStart.current.x;
+    const deltaY = event.clientY - pointerStart.current.y;
+    pointerStart.current = null;
+
+    if (Math.abs(deltaX) < 54 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+    if (deltaX < 0) next();
+    else previous();
+  };
+
+  const transitionDuration = reduceMotion ? 0.01 : 0.55;
+
+  return (
+    <div className="presentation-root">
+      <motion.div
+        className="ambient-glow"
+        aria-hidden="true"
+        animate={{
+          x: `${(activeIndex % 3) * 14 - 12}vw`,
+          y: `${((activeIndex + 1) % 3) * 6 - 8}vh`,
+          opacity: activeIndex === 1 ? 0.34 : 0.52,
+        }}
+        transition={{ duration: reduceMotion ? 0.01 : 1.1, ease: [0.16, 1, 0.3, 1] }}
+      />
+      <div className="grain-layer" aria-hidden="true" />
+
+      <div
+        className="presentation-shell"
+        aria-hidden={panel ? true : undefined}
+        inert={panel ? true : undefined}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => {
+          pointerStart.current = null;
+        }}
+      >
+        <header className="presentation-header">
+          <div className="wordmark" aria-label="Global Dent">
+            <span className="wordmark-mark" aria-hidden="true" />
+            <span>GLOBAL DENT</span>
+          </div>
+          <p className="header-title">{activeSlide.title}</p>
+        </header>
+
+        <main className="slides-viewport" aria-live="polite">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.section
+              ref={slideRef}
+              key={activeSlide.id}
+              id={activeSlide.id}
+              className="slide"
+              aria-label={`${activeIndex + 1} из ${slides.length}. ${activeSlide.title}`}
+              custom={direction}
+              initial={
+                reduceMotion
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: direction > 0 ? "11vw" : "-11vw" }
+              }
+              animate={{ opacity: 1, x: 0 }}
+              exit={
+                reduceMotion
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: direction > 0 ? "-7vw" : "7vw" }
+              }
+              transition={{ duration: transitionDuration, ease: [0.16, 1, 0.3, 1] }}
+              onAnimationComplete={focusSlideTitle}
+            >
+              <ActiveSlide openPanel={setPanelId} />
+            </motion.section>
+          </AnimatePresence>
+        </main>
+
+        <nav className="presentation-nav" aria-label="Навигация по презентации">
+          <button
+            type="button"
+            className="nav-arrow"
+            onClick={previous}
+            disabled={activeIndex === 0}
+            aria-label="Предыдущий слайд"
+          >
+            <ArrowLeft size={20} weight="bold" aria-hidden="true" />
+          </button>
+
+          <div className="nav-center">
+            <span className="slide-count">
+              {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+            </span>
+            <div className="slide-rail">
+              {slides.map((slide, index) => (
+                <button
+                  type="button"
+                  key={slide.id}
+                  className={index === activeIndex ? "rail-segment is-active" : "rail-segment"}
+                  onClick={() => goTo(index)}
+                  aria-label={`Открыть слайд ${index + 1}: ${slide.title}`}
+                  aria-current={index === activeIndex ? "step" : undefined}
+                />
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="nav-arrow"
+            onClick={next}
+            disabled={activeIndex === slides.length - 1}
+            aria-label="Следующий слайд"
+          >
+            <ArrowRight size={20} weight="bold" aria-hidden="true" />
+          </button>
+        </nav>
+      </div>
+
+      <DetailPanel panel={panel} onClose={() => setPanelId(null)} />
+    </div>
+  );
+}
+
