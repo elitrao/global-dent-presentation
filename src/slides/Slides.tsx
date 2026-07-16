@@ -554,8 +554,16 @@ function NextStepSlide() {
       </div>
 
       <div className="final-statement">
-        <CalendarBlank size={24} weight="duotone" aria-hidden="true" />
-        <strong>Сначала ТЗ и точная смета. Затем разработка.</strong>
+        <span className="final-statement-icon">
+          <CalendarBlank size={26} weight="duotone" aria-hidden="true" />
+        </span>
+        <div className="final-statement-copy">
+          <span>Принцип запуска</span>
+          <strong>
+            <span>Сначала ТЗ и точная смета.</span>
+            <span>Затем разработка.</span>
+          </strong>
+        </div>
       </div>
     </div>
   );

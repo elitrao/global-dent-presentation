@@ -1327,16 +1327,59 @@ h3 {
 
 .final-statement {
   grid-column: 1 / -1;
-  display: flex;
+  justify-self: center;
+  width: min(100%, 920px);
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 16px;
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 180, 62, 0.42);
+  border-radius: 20px;
+  background:
+    linear-gradient(105deg, rgba(255, 180, 62, 0.2), rgba(255, 143, 27, 0.07) 58%, rgba(255, 180, 62, 0.03)),
+    rgba(26, 24, 21, 0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 222, 162, 0.12),
+    0 20px 60px rgba(113, 58, 7, 0.16);
   color: var(--text);
-  font-size: clamp(16px, 1.4vw, 20px);
 }
 
-.final-statement svg {
+.final-statement-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #211607;
+  background: var(--accent-bright);
+  box-shadow: 0 8px 24px rgba(255, 166, 31, 0.24);
+}
+
+.final-statement-copy {
+  min-width: 0;
+}
+
+.final-statement-copy > span {
+  display: block;
+  margin-bottom: 3px;
   color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.final-statement strong {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  font-size: clamp(18px, 1.75vw, 25px);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.final-statement strong span:last-child {
+  color: var(--accent-bright);
 }
 
 .presentation-nav {
@@ -2106,8 +2149,8 @@ h3 {
   }
 
   .final-statement {
-    justify-content: flex-start;
     align-items: flex-start;
+    padding: 14px;
     text-align: left;
   }
 
