@@ -118,7 +118,7 @@ ul {
 .presentation-root.is-exporting .visual-frame-hero img {
   object-fit: contain;
   object-position: center;
-  transform: none;
+  transform: translateX(-16%);
 }
 
 .ambient-glow {
@@ -372,8 +372,9 @@ h3 {
 }
 
 .visual-frame-hero img {
+  object-fit: contain;
   object-position: center;
-  transform: scale(1.08) translateX(-11%);
+  transform: translateX(-16%);
 }
 
 .context-layout {
