@@ -1055,10 +1055,7 @@ h3 {
 .content-heading {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 350px);
-  align-items: end;
-  gap: clamp(32px, 5vw, 88px);
+  width: 100%;
 }
 
 .content-heading h2 {
@@ -1079,6 +1076,8 @@ h3 {
   display: flex;
   align-items: flex-start;
   gap: 13px;
+  width: min(100%, 720px);
+  margin-top: 16px;
   padding: 18px 0 18px 20px;
   border-left: 2px solid var(--accent);
   color: var(--accent);
@@ -1983,13 +1982,11 @@ h3 {
   }
 
   .content-heading {
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 20px;
+    width: 100%;
   }
 
   .content-principle {
-    max-width: 520px;
+    max-width: 720px;
   }
 
   .stage-arrow {
@@ -2296,8 +2293,8 @@ h3 {
   .content-principle {
     width: 100%;
     max-width: none;
-    margin-top: 20px;
-    padding: 14px 0 14px 16px;
+    margin-top: 16px;
+    padding: 12px 0 12px 14px;
   }
 
   .content-conveyor {

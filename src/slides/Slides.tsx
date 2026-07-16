@@ -431,12 +431,12 @@ function ContentSlide() {
           <p className="content-lead">
             Система сама собирает и разбирает конкурентов и короткие видео, затем находит форматы и хуки, которые дают просмотры.
           </p>
-        </div>
-        <div className="content-principle">
-          <ShieldCheck size={26} weight="duotone" aria-hidden="true" />
-          <div>
-            <strong>Контент не генерируем</strong>
-            <span>Усиливаем решения команды данными.</span>
+          <div className="content-principle">
+            <ShieldCheck size={26} weight="duotone" aria-hidden="true" />
+            <div>
+              <strong>Контент не генерируем</strong>
+              <span>Усиливаем решения команды данными.</span>
+            </div>
           </div>
         </div>
       </div>
