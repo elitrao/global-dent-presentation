@@ -11,7 +11,6 @@ import {
   Clock,
   CurrencyRub,
   Database,
-  FilmStrip,
   FlowArrow,
   FunnelSimple,
   Lightning,
@@ -41,6 +40,15 @@ function Benefit({ icon, title, text }: { icon: ReactNode; title: string; text: 
         <p>{text}</p>
       </div>
     </div>
+  );
+}
+
+function BenefitSectionLabel() {
+  return (
+    <p className="benefit-section-label">
+      <CheckCircle size={17} weight="fill" aria-hidden="true" />
+      Плюсы от внедрения
+    </p>
   );
 }
 
@@ -120,16 +128,19 @@ function ContextSlide() {
           <p>действующих клиентов</p>
         </article>
         <article className="metric metric-manual">
-          <div className="metric-icon" aria-hidden="true">
-            <Clock size={30} weight="duotone" />
+          <span className="metric-label">Операционный контур</span>
+          <div className="metric-manual-main">
+            <div className="metric-icon" aria-hidden="true">
+              <Clock size={27} weight="duotone" />
+            </div>
+            <div>
+              <h3>Много ручной работы</h3>
+              <p>Анализ, планирование и проверка информации требуют участия команды.</p>
+            </div>
           </div>
-          <div>
-            <h3>Ручной контур</h3>
-            <p>Анализ, планирование и проверка информации требуют участия команды.</p>
-          </div>
-          <ArrowRight className="metric-flow-arrow" size={24} weight="bold" aria-hidden="true" />
         </article>
         <article className="metric metric-hiring">
+          <span className="metric-label">Оценка нового продавца</span>
           <div className="hiring-number">
             <strong>6</strong>
             <span>месяцев</span>
@@ -189,7 +200,7 @@ function InfrastructureSlide() {
           <VideoCamera size={28} weight="duotone" aria-hidden="true" />
           <div>
             <h3>Контент</h3>
-            <p>Анализ и производство</p>
+            <p>Форматы, хуки, сценарии</p>
           </div>
         </article>
       </div>
@@ -217,6 +228,7 @@ function InventorySlide({ openPanel }: SlideProps) {
         </h2>
         <FlowSteps steps={["1С и склады", "Аналитика", "Прогноз", "Рекомендации", "Вопросы"]} />
 
+        <BenefitSectionLabel />
         <div className="benefit-grid compact-benefits">
           <Benefit
             icon={<Package size={22} weight="duotone" />}
@@ -263,6 +275,7 @@ function BotSlide() {
           Первые сценарии дали положительный результат. Следующий уровень: больше знаний, устойчивее ответы, шире применение.
         </p>
 
+        <BenefitSectionLabel />
         <div className="bot-capabilities">
           <Benefit
             icon={<Lightning size={22} weight="duotone" />}
@@ -348,6 +361,7 @@ function CandidatesSlide({ openPanel }: SlideProps) {
           </div>
         </div>
 
+        <BenefitSectionLabel />
         <div className="candidate-outcomes">
           <Benefit
             icon={<FunnelSimple size={21} weight="duotone" />}
@@ -393,34 +407,46 @@ function FilesIcon() {
 function ContentSlide() {
   const steps = [
     {
-      icon: <MagnifyingGlass size={30} weight="duotone" />,
-      title: "Анализировать",
-      text: "Конкуренты, Reels, TikTok и YouTube",
+      icon: <MagnifyingGlass size={26} weight="duotone" />,
+      title: "Собирать",
+      text: "Конкуренты, Reels, TikTok, Shorts и YouTube",
     },
     {
-      icon: <Target size={30} weight="duotone" />,
-      title: "Находить",
-      text: "Темы и форматы, которые уже работают",
+      icon: <ChartLineUp size={26} weight="duotone" />,
+      title: "Разбирать",
+      text: "Просмотры, хуки, структура и подача роликов",
     },
     {
-      icon: <FilmStrip size={30} weight="duotone" />,
-      title: "Генерировать",
-      text: "Сценарии и контент для выбранного канала",
+      icon: <Target size={26} weight="duotone" />,
+      title: "Выделять",
+      text: "Работающие форматы и идеи для продюсирования",
     },
     {
-      icon: <CheckCircle size={30} weight="duotone" />,
-      title: "Проверять",
-      text: "Человек принимает решение до публикации",
+      icon: <BookOpenText size={26} weight="duotone" />,
+      title: "Передавать команде",
+      text: "Готовая идея, формат и сценарий для реализации",
     },
   ];
 
   return (
     <div className="slide-layout content-layout">
       <div className="content-heading">
-        <p className="eyebrow">Контент-процесс</p>
-        <h2 data-slide-title tabIndex={-1}>
-          От анализа форматов до готовой публикации
-        </h2>
+        <div>
+          <p className="eyebrow">Аналитика для продюсирования</p>
+          <h2 data-slide-title tabIndex={-1}>
+            Полуавтоматический конвейер аналитики
+          </h2>
+          <p className="content-lead">
+            Система сама собирает и разбирает конкурентов и короткие видео, затем находит форматы и хуки, которые дают просмотры.
+          </p>
+        </div>
+        <div className="content-principle">
+          <ShieldCheck size={26} weight="duotone" aria-hidden="true" />
+          <div>
+            <strong>Контент не генерируем</strong>
+            <span>Усиливаем решения команды данными.</span>
+          </div>
+        </div>
       </div>
 
       <div className="content-conveyor">
@@ -436,11 +462,14 @@ function ContentSlide() {
         ))}
       </div>
 
-      <div className="content-benefits">
-        <span>Быстрее находить сильные форматы</span>
-        <span>Поддерживать регулярность</span>
-        <span>Переиспользовать идеи между каналами</span>
-        <span>Сохранять редакционный контроль</span>
+      <div className="content-benefit-area">
+        <BenefitSectionLabel />
+        <div className="content-benefits">
+          <span>Решения опираются на просмотры и паттерны</span>
+          <span>Быстрее находить сильные форматы</span>
+          <span>Меньше ручного разбора конкурентов</span>
+          <span>Редакционное решение остается за командой</span>
+        </div>
       </div>
     </div>
   );

@@ -142,9 +142,10 @@ export function App() {
         }}
       >
         <header className="presentation-header">
-          <div className="wordmark" aria-label="Global Dent">
+          <div className="wordmark" aria-label="Global Dent и Synapt">
             <span className="wordmark-mark" aria-hidden="true" />
             <span>GLOBAL DENT</span>
+            <span className="wordmark-collab"><b>×</b> SYNAPT</span>
           </div>
           <p className="header-title">{activeSlide.title}</p>
         </header>
@@ -222,4 +223,3 @@ export function App() {
     </div>
   );
 }
-
