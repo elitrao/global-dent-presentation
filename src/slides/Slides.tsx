@@ -454,6 +454,11 @@ function InvestmentSlide({ openPanel }: SlideProps) {
           Короткие этапы. Понятный результат.
         </h2>
         <p>Каждые 1-2 недели появляется результат, который можно проверить на данных.</p>
+        <div className="investment-summary">
+          <span>Итого по 3 фиксированным направлениям</span>
+          <strong>≈ 900 000 ₽</strong>
+          <p>Оборачиваемость, кандидаты и контент. ИИ-бот и сопровождение считаются отдельно.</p>
+        </div>
         <button type="button" className="text-button" onClick={() => openPanel("investment")}>
           <SlidersHorizontal size={20} weight="bold" aria-hidden="true" />
           Все этапы и суммы
@@ -465,29 +470,42 @@ function InvestmentSlide({ openPanel }: SlideProps) {
         <article className="investment-card investment-primary">
           <div className="investment-icon"><ChartLineUp size={28} weight="duotone" /></div>
           <h3>Оборачиваемость</h3>
-          <strong>80 000 ₽</strong>
-          <p>Discovery</p>
-          <div className="investment-total"><span>≈ 530 000 ₽</span><span>≈ 9 недель</span></div>
+          <p className="investment-price-label">Ориентир полного направления</p>
+          <strong>≈ 530 000 ₽</strong>
+          <div className="investment-card-details">
+            <span>Первый этап: Discovery 80 000 ₽</span>
+            <span>Срок: ≈ 9 недель</span>
+          </div>
         </article>
         <article className="investment-card">
           <div className="investment-icon"><UserFocus size={28} weight="duotone" /></div>
           <h3>Кандидаты</h3>
-          <strong>80 000 ₽</strong>
-          <p>Discovery</p>
-          <div className="investment-total"><span>≈ 270 000 ₽</span><span>≈ 3 недели</span></div>
+          <p className="investment-price-label">Ориентир полного направления</p>
+          <strong>≈ 270 000 ₽</strong>
+          <div className="investment-card-details">
+            <span>Первый этап: Discovery 80 000 ₽</span>
+            <span>Срок: ≈ 3 недели</span>
+          </div>
         </article>
         <article className="investment-card investment-content-card">
           <div className="investment-icon"><VideoCamera size={28} weight="duotone" /></div>
           <h3>Контент</h3>
+          <p className="investment-price-label">Стоимость пилота</p>
           <strong>100 000 ₽</strong>
-          <p>Пилот, 2 недели</p>
+          <div className="investment-card-details">
+            <span>1 канал</span>
+            <span>Срок: 2 недели</span>
+          </div>
         </article>
         <article className="investment-card investment-support-card">
           <div className="investment-icon"><ChatCircleDots size={28} weight="duotone" /></div>
           <h3>ИИ-бот</h3>
+          <p className="investment-price-label">Модель оплаты</p>
           <strong>Помесячно</strong>
-          <p>В рамках сопровождения</p>
-          <div className="support-price"><CurrencyRub size={18} weight="bold" />Системы от 20 000 ₽/мес</div>
+          <div className="investment-card-details support-price">
+            <span>В рамках сопровождения</span>
+            <span><CurrencyRub size={18} weight="bold" />Новые системы от 20 000 ₽/мес</span>
+          </div>
         </article>
       </div>
     </div>
