@@ -390,8 +390,8 @@ h3 {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 1fr) minmax(190px, 0.62fr);
-  min-height: 570px;
+  grid-template-rows: minmax(210px, 0.92fr) minmax(205px, 0.82fr);
+  min-height: 520px;
   overflow: hidden;
   border: 1px solid var(--line-neutral);
   border-radius: var(--radius-card);
@@ -409,7 +409,7 @@ h3 {
   flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
-  padding: clamp(24px, 2.6vw, 42px);
+  padding: clamp(22px, 2.15vw, 34px);
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -486,7 +486,7 @@ h3 {
   z-index: 1;
   color: var(--accent-bright);
   margin-top: auto;
-  font-size: clamp(42px, 4.5vw, 72px);
+  font-size: clamp(38px, 3.6vw, 58px);
   font-weight: 720;
   letter-spacing: -0.06em;
   line-height: 0.96;
@@ -494,11 +494,11 @@ h3 {
 }
 
 .metric-volume .metric-number {
-  font-size: clamp(42px, 4.5vw, 72px);
+  font-size: clamp(38px, 3.6vw, 58px);
 }
 
 .metric-clients .metric-number {
-  font-size: clamp(42px, 4.5vw, 72px);
+  font-size: clamp(38px, 3.6vw, 58px);
 }
 
 .metric p {
@@ -525,7 +525,7 @@ h3 {
 }
 
 .hiring-number strong {
-  font-size: clamp(62px, 5.7vw, 88px);
+  font-size: clamp(56px, 4.8vw, 74px);
   font-weight: 740;
   letter-spacing: -0.07em;
   line-height: 0.82;
@@ -1713,7 +1713,7 @@ h3 {
   }
 
   .metric-composition {
-    min-height: 500px;
+    min-height: 470px;
   }
 
   .infrastructure-layout {
@@ -1752,7 +1752,7 @@ h3 {
   }
 
   .metric-composition {
-    grid-template-rows: minmax(0, 1fr) minmax(155px, 0.5fr);
+    grid-template-rows: minmax(190px, 0.92fr) minmax(185px, 0.82fr);
   }
 
   .context-heading h2 {
