@@ -107,24 +107,32 @@ function ContextSlide() {
         </p>
       </div>
 
-      <div className="metric-composition">
-        <article className="metric metric-clients">
-          <span className="metric-number">≈ 5 000</span>
-          <p>клиентов в действующей базе</p>
-        </article>
+      <div className="metric-composition" aria-label="Ключевые показатели масштаба и ручных процессов">
         <article className="metric metric-volume">
+          <span className="metric-label">Годовой объем</span>
           <span className="metric-number">≈ 300 000</span>
-          <p>имплантатов в год</p>
+          <p>имплантатов</p>
+        </article>
+        <article className="metric metric-clients">
+          <span className="metric-label">Клиентская база</span>
+          <span className="metric-number">≈ 5 000</span>
+          <p>действующих клиентов</p>
         </article>
         <article className="metric metric-manual">
-          <Clock size={34} weight="duotone" aria-hidden="true" />
+          <div className="metric-icon" aria-hidden="true">
+            <Clock size={30} weight="duotone" />
+          </div>
           <div>
             <h3>Ручной контур</h3>
             <p>Анализ, планирование и проверка информации требуют участия команды.</p>
           </div>
+          <ArrowRight className="metric-flow-arrow" size={24} weight="bold" aria-hidden="true" />
         </article>
         <article className="metric metric-hiring">
-          <span className="metric-number">6 месяцев</span>
+          <div className="hiring-number">
+            <strong>6</strong>
+            <span>месяцев</span>
+          </div>
           <p>до понимания, эффективен ли новый продавец</p>
         </article>
       </div>
