@@ -2541,11 +2541,11 @@ p {
 
 @media (max-width: 760px) {
   .wordmark {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .eyebrow {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   h2,
@@ -2555,11 +2555,11 @@ p {
   }
 
   p {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .context-columns p {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .architecture-card strong,
@@ -2567,7 +2567,7 @@ p {
   .editorial-card h3,
   .benefit-row strong,
   .investment-card h3 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .architecture-card p,
@@ -2575,7 +2575,7 @@ p {
   .editorial-card p,
   .project-note,
   .benefit-row span {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .benefit-heading,
@@ -2583,7 +2583,7 @@ p {
   .investment-total span,
   .start-card > span,
   .final-principle span {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .detail-link {
@@ -2620,7 +2620,7 @@ p {
   }
 
   .project-cost-total span {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .project-cost-total strong {
@@ -2650,7 +2650,7 @@ p {
   }
 
   .cost-stage-card p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.35;
   }
 
@@ -2660,7 +2660,7 @@ p {
   }
 
   .cost-stage-meta span {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .cost-stage-meta strong {
@@ -2670,12 +2670,12 @@ p {
   .cost-slide-note {
     margin-top: 10px;
     padding-top: 8px;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .requirements-intro {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.4;
   }
 
@@ -2697,7 +2697,7 @@ p {
   .requirements-card > span {
     min-height: 0;
     margin-top: 3px;
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .requirements-card ul {
@@ -2706,7 +2706,7 @@ p {
 
   .requirements-card li {
     padding: 4px 0 4px 12px;
-    font-size: 10px;
+    font-size: 11px;
     line-height: 1.3;
   }
 
@@ -2717,7 +2717,7 @@ p {
   .requirements-note {
     margin-top: 8px;
     padding-top: 7px;
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
@@ -2826,7 +2826,7 @@ p {
   }
 
   .bot-slide .editorial-card p {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.22;
   }
 
@@ -2852,13 +2852,13 @@ p {
   }
 
   .bot-slide .benefit-row span {
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1.2;
   }
 
   .bot-slide .project-note {
     margin-top: 6px;
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1.2;
   }
 
@@ -2892,7 +2892,7 @@ p {
   }
 
   .candidates-slide .candidate-process .numbered-row p {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.2;
   }
 
@@ -2918,7 +2918,7 @@ p {
   }
 
   .candidates-slide .benefit-row span {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .candidates-slide .project-actions {
@@ -2964,7 +2964,7 @@ p {
   }
 
   .content-slide .content-process .numbered-row p {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.2;
   }
 
@@ -2990,7 +2990,7 @@ p {
   }
 
   .content-slide .benefit-row span {
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1.2;
   }
 
