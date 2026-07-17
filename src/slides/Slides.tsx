@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { detailPanels } from "../content";
 import type { SlideDefinition, SlideProps } from "../types";
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -50,6 +51,152 @@ function DetailButton({ children, onClick }: { children: ReactNode; onClick: () 
       <span aria-hidden="true">↗</span>
     </button>
   );
+}
+
+function ProjectActions({ children }: { children: ReactNode }) {
+  return <div className="project-actions">{children}</div>;
+}
+
+type CostStage = {
+  title: string;
+  description: string;
+  time: string;
+  amount: string;
+};
+
+function ProjectCostSlide({
+  eyebrow,
+  total,
+  totalLabel,
+  stages,
+  note,
+}: {
+  eyebrow: string;
+  total: string;
+  totalLabel: string;
+  stages: CostStage[];
+  note: string;
+}) {
+  return (
+    <div className="slide-layout project-cost-slide">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <div className="project-cost-heading">
+        <h2 data-slide-title tabIndex={-1}>Этапы и стоимость</h2>
+        <div className="project-cost-total">
+          <span>{totalLabel}</span>
+          <strong>{total}</strong>
+        </div>
+      </div>
+      <div className={`cost-stage-grid cost-stage-grid-${stages.length}`}>
+        {stages.map((stage, index) => (
+          <article className="cost-stage-card" key={stage.title}>
+            <span className="cost-stage-number">{index + 1}</span>
+            <h3>{stage.title}</h3>
+            <p>{stage.description}</p>
+            <div className="cost-stage-meta">
+              <span>{stage.time}</span>
+              <strong>{stage.amount}</strong>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p className="cost-slide-note">{note}</p>
+    </div>
+  );
+}
+
+function DetailContentSlide({ panelId, eyebrow }: { panelId: "inventory" | "candidates"; eyebrow: string }) {
+  const panel = detailPanels[panelId];
+
+  return (
+    <div className="slide-layout requirements-slide">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 data-slide-title tabIndex={-1}>{panel.title}</h2>
+      <p className="requirements-intro">{panel.intro}</p>
+      <div className="requirements-grid">
+        {panel.groups.map((group) => (
+          <article className="requirements-card" key={group.title}>
+            <h3>{group.title}</h3>
+            {group.owner ? <span>{group.owner}</span> : null}
+            <ul>
+              {group.items.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+      {panel.note ? <p className="requirements-note">{panel.note}</p> : null}
+    </div>
+  );
+}
+
+function InventoryCostSlide() {
+  return (
+    <ProjectCostSlide
+      eyebrow="Проект 1 · Оборачиваемость"
+      total="≈ 530 000 ₽"
+      totalLabel="Ориентир полного направления · около 9 недель"
+      stages={[
+        { title: "Discovery", description: "Разбор 1С и складских данных, макет панели, ТЗ и точная смета", time: "2 недели + 2 дня на доступы", amount: "80 000 ₽" },
+        { title: "Аналитическое ядро", description: "Единая модель данных и первая рабочая версия панели", time: "4 недели", amount: "≈ 250 000 ₽" },
+        { title: "Прогноз и рекомендации", description: "Прогноз потребности и рекомендации по закупкам", time: "3 недели", amount: "≈ 200 000 ₽" },
+      ]}
+      note="Финальная стоимость основной разработки уточняется после Discovery"
+    />
+  );
+}
+
+function CandidatesCostSlide() {
+  return (
+    <ProjectCostSlide
+      eyebrow="Проект 3 · Кандидаты"
+      total="≈ 270 000 ₽"
+      totalLabel="Ориентир полного направления · около 3 недель"
+      stages={[
+        { title: "Discovery данных найма", description: "Проверка истории найма, профиль успешного продавца, ТЗ и точная смета", time: "1–2 недели", amount: "80 000 ₽" },
+        { title: "Прогнозная модель", description: "Модель на данных Global Dent и отчёт по новому кандидату", time: "2 недели", amount: "≈ 190 000 ₽" },
+      ]}
+      note="Разработка начинается только после подтверждения достаточности данных"
+    />
+  );
+}
+
+function BotCostSlide() {
+  return (
+    <ProjectCostSlide
+      eyebrow="Проект 2 · ИИ-бот"
+      total="Помесячно"
+      totalLabel="Развитие в рамках действующего сопровождения"
+      stages={[
+        { title: "Плановое развитие", description: "Новые сценарии, развитие базы знаний и контроль качества ответов", time: "Помесячно", amount: "В сопровождении" },
+        { title: "Крупные блоки", description: "Самостоятельные функциональные задачи с отдельным описанием и оценкой", time: "По оценке задачи", amount: "Отдельная смета" },
+        { title: "Новые системы", description: "Доработки, аналитика работы и плановое развитие после запуска", time: "Помесячно", amount: "от 20 000 ₽/мес" },
+      ]}
+      note="Состав работ на месяц фиксируется заранее; крупные функциональные блоки согласуются отдельно"
+    />
+  );
+}
+
+function ContentCostSlide() {
+  return (
+    <ProjectCostSlide
+      eyebrow="Проект 4 · Контент-аналитика"
+      total="100 000 ₽"
+      totalLabel="Пилот на одном канале · 2 недели"
+      stages={[
+        { title: "Пилот", description: "Сбор и анализ конкурентов, форматов и хуков на одном выбранном канале", time: "2 недели", amount: "100 000 ₽" },
+        { title: "Проверяемый результат", description: "Подборка форматов, структура аналитики и основание для масштабирования", time: "По итогам пилота", amount: "Решение команды" },
+      ]}
+      note="Контент не генерируется автоматически — система усиливает решения команды данными"
+    />
+  );
+}
+
+function InventoryRequirementsSlide() {
+  return <DetailContentSlide panelId="inventory" eyebrow="Проект 1 · Что потребуется" />;
+}
+
+function CandidatesRequirementsSlide() {
+  return <DetailContentSlide panelId="candidates" eyebrow="Проект 3 · Какие данные нужны" />;
 }
 
 function HeroSlide() {
@@ -170,12 +317,15 @@ function InventorySlide({ openPanel }: SlideProps) {
           { title: "Быстрые ответы", text: "Без ручных расчётов" },
         ]}
       />
-      <DetailButton onClick={() => openPanel("inventory")}>Что потребуется</DetailButton>
+      <ProjectActions>
+        <DetailButton onClick={() => openPanel("inventory")}>Что потребуется</DetailButton>
+        <DetailButton onClick={() => openPanel("inventoryCost")}>Цена по проекту</DetailButton>
+      </ProjectActions>
     </div>
   );
 }
 
-function BotSlide() {
+function BotSlide({ openPanel }: SlideProps) {
   const blocks = [
     { title: "Новые сценарии", text: "Расширяем задачи, которые бот решает для команды" },
     { title: "Успешные скрипты", text: "Сохраняем и переиспользуем работающие ответы" },
@@ -207,6 +357,9 @@ function BotSlide() {
         ]}
       />
       <p className="project-note">Развитие идёт в рамках сопровождения. Крупные функциональные блоки согласуются отдельно</p>
+      <ProjectActions>
+        <DetailButton onClick={() => openPanel("botCost")}>Цена по проекту</DetailButton>
+      </ProjectActions>
     </div>
   );
 }
@@ -232,12 +385,15 @@ function CandidatesSlide({ openPanel }: SlideProps) {
           { title: "Честная проверка", text: "Сначала оцениваем достаточность истории" },
         ]}
       />
-      <DetailButton onClick={() => openPanel("candidates")}>Какие данные нужны</DetailButton>
+      <ProjectActions>
+        <DetailButton onClick={() => openPanel("candidates")}>Какие данные нужны</DetailButton>
+        <DetailButton onClick={() => openPanel("candidatesCost")}>Цена по проекту</DetailButton>
+      </ProjectActions>
     </div>
   );
 }
 
-function ContentSlide() {
+function ContentSlide({ openPanel }: SlideProps) {
   return (
     <div className="slide-layout content-slide">
       <Eyebrow>Аналитика для продюсирования</Eyebrow>
@@ -265,6 +421,9 @@ function ContentSlide() {
           { title: "Сохранять редакционный контроль", text: "Финальное решение всегда остаётся за командой" },
         ]}
       />
+      <ProjectActions>
+        <DetailButton onClick={() => openPanel("contentCost")}>Цена по проекту</DetailButton>
+      </ProjectActions>
     </div>
   );
 }
@@ -353,9 +512,15 @@ export const slides: SlideDefinition[] = [
   { id: "slide-2", title: "Почему сейчас", component: ContextSlide },
   { id: "slide-3", title: "Общая инфраструктура", component: InfrastructureSlide },
   { id: "slide-4", title: "Оборачиваемость", component: InventorySlide },
-  { id: "slide-5", title: "ИИ-бот", component: BotSlide },
-  { id: "slide-6", title: "Кандидаты", component: CandidatesSlide },
-  { id: "slide-7", title: "Контент", component: ContentSlide },
-  { id: "slide-8", title: "Запуск и инвестиции", component: InvestmentSlide },
-  { id: "slide-9", title: "Следующий шаг", component: NextStepSlide },
+  { id: "slide-5", title: "Стоимость оборачиваемости", component: InventoryCostSlide },
+  { id: "slide-6", title: "Что потребуется", component: InventoryRequirementsSlide },
+  { id: "slide-7", title: "ИИ-бот", component: BotSlide },
+  { id: "slide-8", title: "Стоимость развития ИИ-бота", component: BotCostSlide },
+  { id: "slide-9", title: "Кандидаты", component: CandidatesSlide },
+  { id: "slide-10", title: "Стоимость модели кандидатов", component: CandidatesCostSlide },
+  { id: "slide-11", title: "Данные для модели кандидатов", component: CandidatesRequirementsSlide },
+  { id: "slide-12", title: "Контент", component: ContentSlide },
+  { id: "slide-13", title: "Стоимость контент-аналитики", component: ContentCostSlide },
+  { id: "slide-14", title: "Запуск и инвестиции", component: InvestmentSlide },
+  { id: "slide-15", title: "Следующий шаг", component: NextStepSlide },
 ];

@@ -9,9 +9,22 @@ export type SlideId =
   | "slide-6"
   | "slide-7"
   | "slide-8"
-  | "slide-9";
+  | "slide-9"
+  | "slide-10"
+  | "slide-11"
+  | "slide-12"
+  | "slide-13"
+  | "slide-14"
+  | "slide-15";
 
-export type DetailPanelId = "inventory" | "candidates" | "investment";
+export type DetailPanelId =
+  | "inventory"
+  | "candidates"
+  | "investment"
+  | "inventoryCost"
+  | "botCost"
+  | "candidatesCost"
+  | "contentCost";
 
 export interface DetailGroup {
   title: string;
