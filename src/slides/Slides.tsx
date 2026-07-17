@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { detailPanels } from "../content";
-import type { SlideDefinition, SlideProps } from "../types";
+import type { SlideDefinition } from "../types";
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return <p className="eyebrow">{children}</p>;
@@ -42,19 +42,6 @@ function NumberedRows({
       ))}
     </div>
   );
-}
-
-function DetailButton({ children, onClick }: { children: ReactNode; onClick: () => void }) {
-  return (
-    <button type="button" className="detail-link" onClick={onClick}>
-      {children}
-      <span aria-hidden="true">↗</span>
-    </button>
-  );
-}
-
-function ProjectActions({ children }: { children: ReactNode }) {
-  return <div className="project-actions">{children}</div>;
 }
 
 type CostStage = {
@@ -294,7 +281,7 @@ function InfrastructureSlide() {
   );
 }
 
-function InventorySlide({ openPanel }: SlideProps) {
+function InventorySlide() {
   return (
     <div className="slide-layout project-slide inventory-slide">
       <Eyebrow>Приоритет №1</Eyebrow>
@@ -317,15 +304,11 @@ function InventorySlide({ openPanel }: SlideProps) {
           { title: "Быстрые ответы", text: "Без ручных расчётов" },
         ]}
       />
-      <ProjectActions>
-        <DetailButton onClick={() => openPanel("inventory")}>Что потребуется</DetailButton>
-        <DetailButton onClick={() => openPanel("inventoryCost")}>Цена по проекту</DetailButton>
-      </ProjectActions>
     </div>
   );
 }
 
-function BotSlide({ openPanel }: SlideProps) {
+function BotSlide() {
   const blocks = [
     { title: "Новые сценарии", text: "Расширяем задачи, которые бот решает для команды" },
     { title: "Успешные скрипты", text: "Сохраняем и переиспользуем работающие ответы" },
@@ -357,14 +340,11 @@ function BotSlide({ openPanel }: SlideProps) {
         ]}
       />
       <p className="project-note">Развитие идёт в рамках сопровождения. Крупные функциональные блоки согласуются отдельно</p>
-      <ProjectActions>
-        <DetailButton onClick={() => openPanel("botCost")}>Цена по проекту</DetailButton>
-      </ProjectActions>
     </div>
   );
 }
 
-function CandidatesSlide({ openPanel }: SlideProps) {
+function CandidatesSlide() {
   return (
     <div className="slide-layout candidates-slide">
       <Eyebrow>Проект 3</Eyebrow>
@@ -385,15 +365,11 @@ function CandidatesSlide({ openPanel }: SlideProps) {
           { title: "Честная проверка", text: "Сначала оцениваем достаточность истории" },
         ]}
       />
-      <ProjectActions>
-        <DetailButton onClick={() => openPanel("candidates")}>Какие данные нужны</DetailButton>
-        <DetailButton onClick={() => openPanel("candidatesCost")}>Цена по проекту</DetailButton>
-      </ProjectActions>
     </div>
   );
 }
 
-function ContentSlide({ openPanel }: SlideProps) {
+function ContentSlide() {
   return (
     <div className="slide-layout content-slide">
       <Eyebrow>Аналитика для продюсирования</Eyebrow>
@@ -421,14 +397,11 @@ function ContentSlide({ openPanel }: SlideProps) {
           { title: "Сохранять редакционный контроль", text: "Финальное решение всегда остаётся за командой" },
         ]}
       />
-      <ProjectActions>
-        <DetailButton onClick={() => openPanel("contentCost")}>Цена по проекту</DetailButton>
-      </ProjectActions>
     </div>
   );
 }
 
-function InvestmentSlide({ openPanel }: SlideProps) {
+function InvestmentSlide() {
   const items = [
     { title: "Оборачиваемость", amount: "≈ 530 000 ₽", first: "Discovery 80 000 ₽", time: "≈ 9 недель" },
     { title: "Кандидаты", amount: "≈ 270 000 ₽", first: "Discovery 80 000 ₽", time: "≈ 3 недели" },
@@ -460,7 +433,6 @@ function InvestmentSlide({ openPanel }: SlideProps) {
       </div>
       <div className="investment-bottom">
         <p>Оборачиваемость, кандидаты и контент входят в итог. ИИ-бот и сопровождение считаются отдельно</p>
-        <DetailButton onClick={() => openPanel("investment")}>Все этапы и суммы</DetailButton>
       </div>
     </div>
   );
