@@ -284,7 +284,7 @@ function InfrastructureSlide() {
 function InventorySlide() {
   return (
     <div className="slide-layout project-slide inventory-slide">
-      <Eyebrow>Приоритет №1</Eyebrow>
+      <Eyebrow>Проект 1 · Приоритет №1</Eyebrow>
       <h2 data-slide-title tabIndex={-1}>Панель оборачиваемости</h2>
       <NumberedRows
         className="five-steps"

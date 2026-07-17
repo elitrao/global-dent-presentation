@@ -3,7 +3,7 @@ import type { DetailPanelContent, DetailPanelId } from "./types";
 export const detailPanels: Record<DetailPanelId, DetailPanelContent> = {
   inventory: {
     id: "inventory",
-    title: "Что потребуется для оборачиваемости",
+    title: "Что потребуется для проекта",
     intro:
       "Discovery объединит правила бизнеса, структуру 1С и фактическое движение товара. Данные группируем заранее, чтобы не перегружать команду запросами",
     groups: [
