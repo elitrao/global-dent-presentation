@@ -458,7 +458,7 @@ function NextStepSlide() {
     <div className="slide-layout next-slide">
       <Eyebrow>Следующий шаг</Eyebrow>
       <h2 data-slide-title tabIndex={-1}>Рабочий звонок</h2>
-      <p className="next-intro">Показываем концепты, фиксируем приоритеты и выбираем первый независимый старт</p>
+      <p className="next-intro">Фиксируем приоритеты и выбираем, с чего стартовать</p>
       <div className="start-grid">
         {starts.map((start) => (
           <article className="start-card" key={start.title}>
